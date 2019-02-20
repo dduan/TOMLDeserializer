@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "NetTime",
+        "repositoryURL": "https://github.com/dduan/NetTime",
+        "state": {
+          "branch": null,
+          "revision": "899ead3f98b3bb58b4e06e00657d9e1aae02d4a9",
+          "version": "0.0.4"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
