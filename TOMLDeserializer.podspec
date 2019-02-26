@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
   spec.name                      = "TOMLDeserializer"
-  spec.version                   = "0.0.1"
-  spec.summary                   = "RFC 3339 compliant date/time data types."
+  spec.version                   = "0.0.3"
+  spec.summary                   = "RFC  compliant date/time data types."
   spec.homepage                  = "https://github.com/dduan/TOMLDeserializer"
   spec.license                   = { :type => "MIT", :file => "LICENSE.md" }
   spec.author                    = { "Daniel Duan" => "daniel@duan.ca" }
@@ -15,5 +15,5 @@ Pod::Spec.new do |spec|
   spec.source_files              = "Sources/**/*.swift"
   spec.requires_arc              = true
   spec.module_name               = "TOMLDeserializer"
-  spec.dependency  "NetTime", '~> 0.0.2'
+  spec.dependency  "NetTime", '~> 0.0.4'
 end
