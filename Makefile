@@ -22,3 +22,10 @@ install-%:
 	true
 
 test-SwiftPM: test
+
+ensure-CocoaPods:
+	pod repo update
+	sudo gem install cocoapods -v 1.6.0
+
+test-CocoaPods: ensure-CocoaPods
+	pod lib lint --verbose
