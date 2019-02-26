@@ -15,5 +15,5 @@ Pod::Spec.new do |spec|
   spec.source_files              = "Sources/**/*.swift"
   spec.requires_arc              = true
   spec.module_name               = "TOMLDeserializer"
-  spec.dependency  "NetTime", '~> 0.0.1'
+  spec.dependency  "NetTime", '~> 0.0.2'
 end
