@@ -12,6 +12,14 @@ Compatible with [TOML v0.5.0][]
 
 ## Installation
 
+#### With [CocoaPods](http://cocoapods.org/)
+
+```ruby
+use_frameworks!
+
+pod "TOMLDeserializer"
+```
+
 #### With [SwiftPM](https://swift.org/package-manager)
 
 ```swift
