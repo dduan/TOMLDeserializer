@@ -26,6 +26,12 @@ pod "TOMLDeserializer"
 .package(url: "https://github.com/dduan/TOMLDeserializer", from: "0.0.3")
 ```
 
+#### With [Carthage](https://github.com/Carthage/Carthage)
+
+```
+github "dduan/TOMLDeserializer"
+```
+
 ## Types
 
 In addition to Swift types from the standard library, date and time are
