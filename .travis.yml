@@ -1,9 +1,17 @@
 matrix:
   include:
     - os: osx
+      env: ACTION=carthage
+    - os: osx
       env: ACTION=CocoaPods
     - os: osx
       env: ACTION=SwiftPM
+    - os: osx
+      env: ACTION=tvOS
+    - os: osx
+      env: ACTION=iOS
+    - os: osx
+      env: ACTION=macOS
     - os: linux
       language: generic
       dist: trusty

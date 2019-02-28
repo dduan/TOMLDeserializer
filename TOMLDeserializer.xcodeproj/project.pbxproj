@@ -1,0 +1,472 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		37D5B8E2221A3C5B004E086E /* TOMLDeserializer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D5B8D8221A3C5B004E086E /* TOMLDeserializer.framework */; };
+		37D5B8FB221A3CB3004E086E /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5B8F4221A3CB3004E086E /* constants.swift */; };
+		E3ABEBD622267C11005851DB /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3ABEBD222267C11005851DB /* Errors.swift */; };
+		E3ABEBD722267C11005851DB /* TOMLDeserializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3ABEBD322267C11005851DB /* TOMLDeserializer.swift */; };
+		E3ABEBD822267C11005851DB /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3ABEBD422267C11005851DB /* Parser.swift */; };
+		E3ABEBD922267C11005851DB /* Scanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3ABEBD522267C11005851DB /* Scanner.swift */; };
+		E3ABEBDC22267C27005851DB /* TOMLDeserializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3ABEBDA22267C27005851DB /* TOMLDeserializerTests.swift */; };
+		E3ABEBDD22267C27005851DB /* ScannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3ABEBDB22267C27005851DB /* ScannerTests.swift */; };
+		E3ABEBFE22268171005851DB /* NetTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3ABEBF82226814D005851DB /* NetTime.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		37D5B8E3221A3C5B004E086E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 37D5B8CD221A3C20004E086E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 37D5B8D7221A3C5B004E086E;
+			remoteInfo = TOMLDeserializer;
+		};
+		E3ABEBF72226814D005851DB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3ABEBF22226814D005851DB /* NetTime.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 37D5B8D8221A3C5B004E086E;
+			remoteInfo = NetTime;
+		};
+		E3ABEBF92226814D005851DB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3ABEBF22226814D005851DB /* NetTime.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 37D5B8E1221A3C5B004E086E;
+			remoteInfo = NetTimeTests;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		37D5B8D8221A3C5B004E086E /* TOMLDeserializer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TOMLDeserializer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		37D5B8E1221A3C5B004E086E /* TOMLDeserializerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TOMLDeserializerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		37D5B8F4221A3CB3004E086E /* constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
+		37D5B914221A3CD9004E086E /* UniversalFramework_Framework.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UniversalFramework_Framework.xcconfig; sourceTree = "<group>"; };
+		37D5B915221A3CD9004E086E /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		37D5B917221A3CD9004E086E /* UniversalFramework_Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UniversalFramework_Base.xcconfig; sourceTree = "<group>"; };
+		37D5B918221A3CD9004E086E /* UniversalFramework_Test.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UniversalFramework_Test.xcconfig; sourceTree = "<group>"; };
+		37D5B919221A3CD9004E086E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E3ABEBD222267C11005851DB /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		E3ABEBD322267C11005851DB /* TOMLDeserializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOMLDeserializer.swift; sourceTree = "<group>"; };
+		E3ABEBD422267C11005851DB /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		E3ABEBD522267C11005851DB /* Scanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scanner.swift; sourceTree = "<group>"; };
+		E3ABEBDA22267C27005851DB /* TOMLDeserializerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOMLDeserializerTests.swift; sourceTree = "<group>"; };
+		E3ABEBDB22267C27005851DB /* ScannerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerTests.swift; sourceTree = "<group>"; };
+		E3ABEBF22226814D005851DB /* NetTime.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NetTime.xcodeproj; path = Dependencies/NetTime/NetTime.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		37D5B8D5221A3C5B004E086E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3ABEBFE22268171005851DB /* NetTime.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		37D5B8DE221A3C5B004E086E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37D5B8E2221A3C5B004E086E /* TOMLDeserializer.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		37D5B8CC221A3C20004E086E = {
+			isa = PBXGroup;
+			children = (
+				E3ABEBF22226814D005851DB /* NetTime.xcodeproj */,
+				37D5B8F2221A3CB3004E086E /* Sources */,
+				37D5B902221A3CC1004E086E /* Tests */,
+				37D5B912221A3CD9004E086E /* Resources */,
+				37D5B8D9221A3C5B004E086E /* Products */,
+				E3ABEBF022267F6C005851DB /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		37D5B8D9221A3C5B004E086E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				37D5B8D8221A3C5B004E086E /* TOMLDeserializer.framework */,
+				37D5B8E1221A3C5B004E086E /* TOMLDeserializerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		37D5B8F2221A3CB3004E086E /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				37D5B8F3221A3CB3004E086E /* TOMLDeserializer */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		37D5B8F3221A3CB3004E086E /* TOMLDeserializer */ = {
+			isa = PBXGroup;
+			children = (
+				37D5B8F4221A3CB3004E086E /* constants.swift */,
+				E3ABEBD222267C11005851DB /* Errors.swift */,
+				E3ABEBD422267C11005851DB /* Parser.swift */,
+				E3ABEBD522267C11005851DB /* Scanner.swift */,
+				E3ABEBD322267C11005851DB /* TOMLDeserializer.swift */,
+			);
+			path = TOMLDeserializer;
+			sourceTree = "<group>";
+		};
+		37D5B902221A3CC1004E086E /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				37D5B904221A3CC1004E086E /* TOMLDeserializerTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		37D5B904221A3CC1004E086E /* TOMLDeserializerTests */ = {
+			isa = PBXGroup;
+			children = (
+				E3ABEBDB22267C27005851DB /* ScannerTests.swift */,
+				E3ABEBDA22267C27005851DB /* TOMLDeserializerTests.swift */,
+			);
+			path = TOMLDeserializerTests;
+			sourceTree = "<group>";
+		};
+		37D5B912221A3CD9004E086E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				37D5B913221A3CD9004E086E /* xcconfigs */,
+				37D5B919221A3CD9004E086E /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		37D5B913221A3CD9004E086E /* xcconfigs */ = {
+			isa = PBXGroup;
+			children = (
+				37D5B914221A3CD9004E086E /* UniversalFramework_Framework.xcconfig */,
+				37D5B915221A3CD9004E086E /* LICENSE */,
+				37D5B917221A3CD9004E086E /* UniversalFramework_Base.xcconfig */,
+				37D5B918221A3CD9004E086E /* UniversalFramework_Test.xcconfig */,
+			);
+			path = xcconfigs;
+			sourceTree = "<group>";
+		};
+		E3ABEBF022267F6C005851DB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E3ABEBF32226814D005851DB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E3ABEBF82226814D005851DB /* NetTime.framework */,
+				E3ABEBFA2226814D005851DB /* NetTimeTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		37D5B8D3221A3C5B004E086E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		37D5B8D7221A3C5B004E086E /* TOMLDeserializer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 37D5B8EE221A3C5B004E086E /* Build configuration list for PBXNativeTarget "TOMLDeserializer" */;
+			buildPhases = (
+				37D5B8D3221A3C5B004E086E /* Headers */,
+				37D5B8D4221A3C5B004E086E /* Sources */,
+				37D5B8D5221A3C5B004E086E /* Frameworks */,
+				37D5B8D6221A3C5B004E086E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TOMLDeserializer;
+			productName = TOMLDeserializer;
+			productReference = 37D5B8D8221A3C5B004E086E /* TOMLDeserializer.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		37D5B8E0221A3C5B004E086E /* TOMLDeserializerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 37D5B8EF221A3C5B004E086E /* Build configuration list for PBXNativeTarget "TOMLDeserializerTests" */;
+			buildPhases = (
+				37D5B8DD221A3C5B004E086E /* Sources */,
+				37D5B8DE221A3C5B004E086E /* Frameworks */,
+				37D5B8DF221A3C5B004E086E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				37D5B8E4221A3C5B004E086E /* PBXTargetDependency */,
+			);
+			name = TOMLDeserializerTests;
+			productName = TOMLDeserializerTests;
+			productReference = 37D5B8E1221A3C5B004E086E /* TOMLDeserializerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		37D5B8CD221A3C20004E086E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				TargetAttributes = {
+					37D5B8D7221A3C5B004E086E = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					37D5B8E0221A3C5B004E086E = {
+						CreatedOnToolsVersion = 10.1;
+					};
+				};
+			};
+			buildConfigurationList = 37D5B8D0221A3C20004E086E /* Build configuration list for PBXProject "TOMLDeserializer" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 37D5B8CC221A3C20004E086E;
+			productRefGroup = 37D5B8D9221A3C5B004E086E /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E3ABEBF32226814D005851DB /* Products */;
+					ProjectRef = E3ABEBF22226814D005851DB /* NetTime.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				37D5B8D7221A3C5B004E086E /* TOMLDeserializer */,
+				37D5B8E0221A3C5B004E086E /* TOMLDeserializerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E3ABEBF82226814D005851DB /* NetTime.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = NetTime.framework;
+			remoteRef = E3ABEBF72226814D005851DB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E3ABEBFA2226814D005851DB /* NetTimeTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = NetTimeTests.xctest;
+			remoteRef = E3ABEBF92226814D005851DB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		37D5B8D6221A3C5B004E086E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		37D5B8DF221A3C5B004E086E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		37D5B8D4221A3C5B004E086E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3ABEBD822267C11005851DB /* Parser.swift in Sources */,
+				E3ABEBD622267C11005851DB /* Errors.swift in Sources */,
+				E3ABEBD722267C11005851DB /* TOMLDeserializer.swift in Sources */,
+				E3ABEBD922267C11005851DB /* Scanner.swift in Sources */,
+				37D5B8FB221A3CB3004E086E /* constants.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		37D5B8DD221A3C5B004E086E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3ABEBDD22267C27005851DB /* ScannerTests.swift in Sources */,
+				E3ABEBDC22267C27005851DB /* TOMLDeserializerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		37D5B8E4221A3C5B004E086E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 37D5B8D7221A3C5B004E086E /* TOMLDeserializer */;
+			targetProxy = 37D5B8E3221A3C5B004E086E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		37D5B8D1221A3C20004E086E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_VERSION = 4.2;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		37D5B8D2221A3C20004E086E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				SWIFT_VERSION = 4.2;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		37D5B8EA221A3C5B004E086E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 37D5B914221A3CD9004E086E /* UniversalFramework_Framework.xcconfig */;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+					"$(PROJECT_DIR)/Carthage/Build/watchOS",
+				);
+				INFOPLIST_FILE = Resources/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = ca.duan.TOMLDeserializer;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		37D5B8EB221A3C5B004E086E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 37D5B914221A3CD9004E086E /* UniversalFramework_Framework.xcconfig */;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+					"$(PROJECT_DIR)/Carthage/Build/watchOS",
+				);
+				INFOPLIST_FILE = Resources/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = ca.duan.TOMLDeserializer;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
+		37D5B8EC221A3C5B004E086E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 37D5B918221A3CD9004E086E /* UniversalFramework_Test.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+					"$(PROJECT_DIR)/Carthage/Build/watchOS",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ca.duan.TOMLDeserializerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		37D5B8ED221A3C5B004E086E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 37D5B918221A3CD9004E086E /* UniversalFramework_Test.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+					"$(PROJECT_DIR)/Carthage/Build/watchOS",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ca.duan.TOMLDeserializerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		37D5B8D0221A3C20004E086E /* Build configuration list for PBXProject "TOMLDeserializer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				37D5B8D1221A3C20004E086E /* Debug */,
+				37D5B8D2221A3C20004E086E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		37D5B8EE221A3C5B004E086E /* Build configuration list for PBXNativeTarget "TOMLDeserializer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				37D5B8EA221A3C5B004E086E /* Debug */,
+				37D5B8EB221A3C5B004E086E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		37D5B8EF221A3C5B004E086E /* Build configuration list for PBXNativeTarget "TOMLDeserializerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				37D5B8EC221A3C5B004E086E /* Debug */,
+				37D5B8ED221A3C5B004E086E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 37D5B8CD221A3C20004E086E /* Project object */;
+}
