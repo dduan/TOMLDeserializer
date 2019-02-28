@@ -13,13 +13,21 @@ update-linux-test-manifest:
 	@swift test --generate-linuxmain
 
 fetch-dependencies:
-	Scripts/fetch-dependencies.py
+	@Scripts/fetch-dependencies.py
 
 test-docker:
 	@Scripts/run-tests-linux-docker.sh
 
 develop-docker:
 	@Scripts/develop-linux-docker.sh
+
+clean-carthage:
+	@echo "Deleting Carthage artifacts…"
+	@rm -rf Carthage
+	@rm -rf TOMLDeserializer.framework.zip
+
+carthage-archive: clean-carthage install-carthage
+	@carthage build --archive
 
 install-carthage: fetch-dependencies
 	brew update
