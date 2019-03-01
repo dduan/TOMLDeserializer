@@ -134,7 +134,9 @@ final class Scanner {
         if peek(word) {
             self.cursor += word.utf8.count
         } else {
-            throw "Expected \(word)"
+            throw TOMLDeserializerError(
+                summary: "Expected \(word)",
+                location: self.cursorLocation)
         }
     }
 
@@ -156,7 +158,9 @@ final class Scanner {
 
         let text = self.take(until: { $0 == cSingleQuote })
         if self.isDone {
-            throw "Mal-formed literal string"
+            throw TOMLDeserializerError(
+                summary: "Malformed literal string",
+                location: self.cursorLocation)
         }
 
         self.cursor += 1
@@ -174,7 +178,9 @@ final class Scanner {
         while !self.isDone {
             self.take(until: { $0 == cSingleQuote })
             if self.isDone {
-                throw "Mal-formed literal string"
+                throw TOMLDeserializerError(
+                    summary: "Malformed literal string",
+                    location: self.cursorLocation)
             }
             if self.buffer[self.cursor] == cSingleQuote,
                 self.buffer[self.cursor + 1] == cSingleQuote,
@@ -200,7 +206,9 @@ final class Scanner {
         while true {
             let segment = self.take(until: { $0 == cDoubleQuote || $0 == cBackslash })
             if self.isDone {
-                throw "Mal-formed basic string"
+                throw TOMLDeserializerError(
+                    summary: "Malformed basic string",
+                    location: self.cursorLocation)
             }
 
             text += segment
@@ -238,7 +246,9 @@ final class Scanner {
         while !self.isDone {
             let segment = self.take(until: { $0 == cDoubleQuote || $0 == cBackslash })
             if self.isDone {
-                throw "Mal-formed multi-line string"
+                throw TOMLDeserializerError(
+                    summary: "Malformed multi-line string",
+                    location: self.cursorLocation)
             }
 
             text += segment
@@ -282,13 +292,17 @@ final class Scanner {
         }
 
         guard self.next == cu || self.next == cU else {
-            throw "Malformed escape sequence in string"
+            throw TOMLDeserializerError(
+                summary: "Malformed escape sequence in string",
+                location: self.cursorLocation)
         }
 
         self.cursor += 1
 
         if self.cursor + 4 > self.buffer.count {
-            throw "Malformed escape sequence in string, terminated too early"
+            throw TOMLDeserializerError(
+                summary: "Malformed escape sequence in string, terminated too early",
+                location: self.cursorLocation)
         }
 
         var digits = [CChar]()
@@ -299,7 +313,9 @@ final class Scanner {
             isHexDigit(self.buffer[self.cursor + 3])
         else
         {
-            throw "Malformed escape sequence in string"
+            throw TOMLDeserializerError(
+                summary: "Malformed escape sequence in string",
+                location: self.cursorLocation)
         }
 
         digits += self.buffer[self.cursor ..< self.cursor + 4]
@@ -315,7 +331,9 @@ final class Scanner {
 
         let value = digits.reduce(0) { $0 << 4 + decimalValueOfHex($1) }
         guard let result = UnicodeScalar(value).map(String.init) else {
-            throw "Invalid code point"
+            throw TOMLDeserializerError(
+                summary: "Invalid code point",
+                location: self.cursorLocation)
         }
 
         self.cursor += digits.count
@@ -323,7 +341,7 @@ final class Scanner {
     }
 
     @discardableResult
-    func takeComment() throws -> String {
+    func takeComment() -> String {
         assert(self.next == cHashtag)
 
         let startingPoint = self.cursor
@@ -405,7 +423,9 @@ final class Scanner {
     func takeInteger(isDigit: (CChar) -> Bool, shift: Int,  decimal: (CChar) -> Int64) throws -> Int64 {
         self.cursor += 2
         guard isDigit(self.next) else {
-            throw "Mal-formatted integer"
+            throw TOMLDeserializerError(
+                summary: "Mal-formatted integer",
+                location: self.cursorLocation)
         }
 
         var result: Int64 = 0
@@ -420,7 +440,9 @@ final class Scanner {
                 self.cursor += 1
                 continue
             } else if eolCount == -1 {
-                throw "Invalid character in integer"
+                throw TOMLDeserializerError(
+                    summary: "Invalid character in integer",
+                    location: self.cursorLocation)
             }
 
             self.cursor += eolCount
@@ -434,7 +456,9 @@ final class Scanner {
 
     func takeDecimalIntegerWithoutSign() throws -> Int64 {
         guard isDecimalDigit(self.next) else {
-            throw "Mal-formatted decimal integer"
+            throw TOMLDeserializerError(
+                summary: "Mal-formatted decimal integer",
+                location: self.cursorLocation)
         }
 
         var result: Int64 = 0
@@ -494,7 +518,7 @@ final class Scanner {
             } else if isNewline(self.next) {
                 self.take(while: isNewline)
             } else if self.next == cHashtag {
-                try self.takeComment()
+                self.takeComment()
             } else {
                 break
             }
@@ -513,7 +537,9 @@ final class Scanner {
             } else if self.next == cSingleQuote {
                 try result.append(self.takeLiteralString())
             } else {
-                throw "Invalid character in key"
+                throw TOMLDeserializerError(
+                    summary: "Invalid character in key",
+                    location: self.cursorLocation)
             }
 
             self.take(while: isWhitespace)
@@ -530,14 +556,18 @@ final class Scanner {
 
     func takeArrayHeader() throws -> [String] {
         guard self.peek("[[") else {
-            throw "Expected [[ at start of array of table section header"
+            throw TOMLDeserializerError(
+                summary: "Expected [[ at start of array of table section header",
+                location: self.cursorLocation)
         }
         self.cursor += 2
         self.take(while: isWhitespace)
         let keys = try self.takeKeys()
         self.take(while: isWhitespace)
         guard self.peek("]]") else {
-            throw "Expected ]] at end of array of table section header"
+            throw TOMLDeserializerError(
+                summary: "Expected ]] at end of array of table section header",
+                location: self.cursorLocation)
         }
         self.cursor += 2
         return keys
@@ -545,14 +575,18 @@ final class Scanner {
 
     func takeTableHeader() throws -> [String] {
         guard self.next == cOpenBracket else {
-            throw "Expected open bracket in table section header"
+            throw TOMLDeserializerError(
+                summary: "Expected open bracket in table section header",
+                location: self.cursorLocation)
         }
         self.cursor += 1
         self.take(while: isWhitespace)
         let keys = try self.takeKeys()
         self.take(while: isWhitespace)
         guard self.next == cCloseBracket else {
-            throw "Expected close bracket in table section header"
+            throw TOMLDeserializerError(
+                summary: "Expected close bracket in table section header",
+                location: self.cursorLocation)
         }
         self.cursor += 1
         return keys
@@ -560,7 +594,9 @@ final class Scanner {
 
     func takeInlineTable() throws -> [String: Any] {
         guard self.next == cOpenBrace else {
-            throw "Expected open brace at start of inline table"
+            throw TOMLDeserializerError(
+                summary: "Expected open brace at start of inline table",
+                location: self.cursorLocation)
         }
 
         self.cursor += 1
@@ -578,7 +614,9 @@ final class Scanner {
                 self.cursor += 1
                 break
             } else {
-                throw "Malformed inline table"
+                throw TOMLDeserializerError(
+                    summary: "Malformed inline table",
+                    location: self.cursorLocation)
             }
         }
 
@@ -587,7 +625,9 @@ final class Scanner {
 
     func takeArray() throws -> [Any] {
         guard self.next == cOpenBracket else {
-            throw "Expected open bracket at start of inline table"
+            throw TOMLDeserializerError(
+                summary: "Expected open bracket at start of inline table",
+                location: self.cursorLocation)
         }
 
         self.cursor += 1
@@ -616,7 +656,9 @@ final class Scanner {
         let allSame = zip(result, result.dropFirst()).allSatisfy { type(of: $0) == type(of: $1) }
 
         if !allArray && !allDictionary && !allSame {
-            throw "Heteral genious array are not allowed"
+            throw TOMLDeserializerError(
+                summary: "Heteral genious array are not allowed",
+                location: self.cursorLocation)
         }
 
         return result
@@ -713,7 +755,9 @@ final class Scanner {
             return Double.infinity
         }
 
-        throw "Invalid value"
+        throw TOMLDeserializerError(
+            summary: "Invalid value",
+            location: self.cursorLocation)
     }
 
     func takeKeyValuePair() throws -> ([String], Any) {

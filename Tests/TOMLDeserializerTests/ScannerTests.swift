@@ -16,9 +16,9 @@ final class ScannerTests: XCTestCase {
         XCTAssertEqual(try Scanner(text: "'''\n'''").takeMultilineLiteralString(), "")
         XCTAssertEqual(try Scanner(text: "'''\r\n'''").takeMultilineLiteralString(), "")
         XCTAssertEqual(try Scanner(text: "'''\r\na\\u0032\n\\t'''").takeMultilineLiteralString(), "a\\u0032\n\\t")
-        XCTAssertEqual(try Scanner(text: "# this is a comment\r with a naughty carriage return\n").takeComment(),
+        XCTAssertEqual(Scanner(text: "# this is a comment\r with a naughty carriage return\n").takeComment(),
                        "# this is a comment\r with a naughty carriage return")
-        XCTAssertEqual(try Scanner(text: "#").takeComment(), "#")
+        XCTAssertEqual(Scanner(text: "#").takeComment(), "#")
         XCTAssertEqual(try Scanner(text: "0xdeadbee_f").takeHexIntegerWithoutSign(), 0xdeadbeef)
         XCTAssertEqual(try Scanner(text: "0b01_01").takeBinaryIntegerWithoutSign(), 0b0101)
         XCTAssertEqual(try Scanner(text: "0o0_171").takeOctalIntegerWithoutSign(), 0o0171)
