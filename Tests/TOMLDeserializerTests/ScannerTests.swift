@@ -16,9 +16,9 @@ final class ScannerTests: XCTestCase {
         XCTAssertEqual(try Scanner(text: "'''\n'''").takeMultilineLiteralString(), "")
         XCTAssertEqual(try Scanner(text: "'''\r\n'''").takeMultilineLiteralString(), "")
         XCTAssertEqual(try Scanner(text: "'''\r\na\\u0032\n\\t'''").takeMultilineLiteralString(), "a\\u0032\n\\t")
-        XCTAssertEqual(try Scanner(text: "# this is a comment\r with a naughty carriage return\n").takeComment(),
+        XCTAssertEqual(Scanner(text: "# this is a comment\r with a naughty carriage return\n").takeComment(),
                        "# this is a comment\r with a naughty carriage return")
-        XCTAssertEqual(try Scanner(text: "#").takeComment(), "#")
+        XCTAssertEqual(Scanner(text: "#").takeComment(), "#")
         XCTAssertEqual(try Scanner(text: "0xdeadbee_f").takeHexIntegerWithoutSign(), 0xdeadbeef)
         XCTAssertEqual(try Scanner(text: "0b01_01").takeBinaryIntegerWithoutSign(), 0b0101)
         XCTAssertEqual(try Scanner(text: "0o0_171").takeOctalIntegerWithoutSign(), 0o0171)
@@ -65,5 +65,20 @@ final class ScannerTests: XCTestCase {
         let offset = TimeOffset(sign: .minus, hour: 0, minute: 1)!
         XCTAssertEqual(try Scanner(text: "2001-02-14T23:59:60-00:01").takeValue() as? DateTime,
                        DateTime(date: date, time: time, utcOffset: offset))
+    }
+
+    func testPositionSeeking() throws {
+        let text = """
+        a = 2
+        b = [ 2019-02-28T00:00:00Z ]
+        c = [ 1, 2, 3 ]
+        """
+
+        let scanner = Scanner(text: text)
+        scanner.cursor = text.count - 5
+
+        XCTAssertEqual(
+            scanner.cursorLocation,
+            Location(localText: "c = [ 1, 2, 3 ]", line: 3, column: 9, bufferOffset: 44))
     }
 }

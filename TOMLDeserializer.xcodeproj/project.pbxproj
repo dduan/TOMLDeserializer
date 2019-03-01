@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		37D5B8E2221A3C5B004E086E /* TOMLDeserializer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D5B8D8221A3C5B004E086E /* TOMLDeserializer.framework */; };
 		37D5B8FB221A3CB3004E086E /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5B8F4221A3CB3004E086E /* constants.swift */; };
+		E36586FE2228E1100046325B /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36586FB2228E1100046325B /* Location.swift */; };
+		E36587012228EDC30046325B /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36586FF2228EDA30046325B /* ErrorTests.swift */; };
 		E3ABEBD622267C11005851DB /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3ABEBD222267C11005851DB /* Errors.swift */; };
 		E3ABEBD722267C11005851DB /* TOMLDeserializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3ABEBD322267C11005851DB /* TOMLDeserializer.swift */; };
 		E3ABEBD822267C11005851DB /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3ABEBD422267C11005851DB /* Parser.swift */; };
@@ -51,6 +53,8 @@
 		37D5B917221A3CD9004E086E /* UniversalFramework_Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UniversalFramework_Base.xcconfig; sourceTree = "<group>"; };
 		37D5B918221A3CD9004E086E /* UniversalFramework_Test.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UniversalFramework_Test.xcconfig; sourceTree = "<group>"; };
 		37D5B919221A3CD9004E086E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E36586FB2228E1100046325B /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		E36586FF2228EDA30046325B /* ErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTests.swift; sourceTree = "<group>"; };
 		E3ABEBD222267C11005851DB /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		E3ABEBD322267C11005851DB /* TOMLDeserializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOMLDeserializer.swift; sourceTree = "<group>"; };
 		E3ABEBD422267C11005851DB /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
@@ -117,6 +121,7 @@
 				E3ABEBD422267C11005851DB /* Parser.swift */,
 				E3ABEBD522267C11005851DB /* Scanner.swift */,
 				E3ABEBD322267C11005851DB /* TOMLDeserializer.swift */,
+				E36586FB2228E1100046325B /* Location.swift */,
 			);
 			path = TOMLDeserializer;
 			sourceTree = "<group>";
@@ -134,6 +139,7 @@
 			children = (
 				E3ABEBDB22267C27005851DB /* ScannerTests.swift */,
 				E3ABEBDA22267C27005851DB /* TOMLDeserializerTests.swift */,
+				E36586FF2228EDA30046325B /* ErrorTests.swift */,
 			);
 			path = TOMLDeserializerTests;
 			sourceTree = "<group>";
@@ -307,6 +313,7 @@
 				E3ABEBD622267C11005851DB /* Errors.swift in Sources */,
 				E3ABEBD722267C11005851DB /* TOMLDeserializer.swift in Sources */,
 				E3ABEBD922267C11005851DB /* Scanner.swift in Sources */,
+				E36586FE2228E1100046325B /* Location.swift in Sources */,
 				37D5B8FB221A3CB3004E086E /* constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,6 +324,7 @@
 			files = (
 				E3ABEBDD22267C27005851DB /* ScannerTests.swift in Sources */,
 				E3ABEBDC22267C27005851DB /* TOMLDeserializerTests.swift in Sources */,
+				E36587012228EDC30046325B /* ErrorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
