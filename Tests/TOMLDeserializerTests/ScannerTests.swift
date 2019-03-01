@@ -66,4 +66,19 @@ final class ScannerTests: XCTestCase {
         XCTAssertEqual(try Scanner(text: "2001-02-14T23:59:60-00:01").takeValue() as? DateTime,
                        DateTime(date: date, time: time, utcOffset: offset))
     }
+
+    func testPositionSeeking() throws {
+        let text = """
+        a = 2
+        b = [ 2019-02-28T00:00:00Z ]
+        c = [ 1, 2, 3 ]
+        """
+
+        let scanner = Scanner(text: text)
+        scanner.cursor = text.count - 5
+
+        XCTAssertEqual(
+            scanner.cursorLocation,
+            Location(localText: "c = [ 1, 2, 3 ]", line: 3, column: 9, bufferOffset: 44))
+    }
 }
