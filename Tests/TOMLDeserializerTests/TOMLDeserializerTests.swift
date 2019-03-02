@@ -230,4 +230,33 @@ final class TOMLDeserializerTests: XCTestCase {
 
         _ = try TOMLDeserializer.tomlTable(with: input)
     }
+
+    func testValidKey() throws {
+        let input = """
+        ['a']
+        [a.'b']
+        [a.'b'.c]
+        answer = 42
+        """
+        dump(try TOMLDeserializer.tomlTable(with: input))
+    }
+
+    func testInteger() throws {
+        let input = """
+        answer = 42
+        posanswer = +42
+        neganswer = -42
+        zero = 0\n
+        """
+        dump(try TOMLDeserializer.tomlTable(with: input))
+    }
+
+    func testNestedInlineTableArray() throws {
+        let input = "a = [ { b = {} } ]"
+        do {
+            dump(try TOMLDeserializer.tomlTable(with: input))
+        } catch let error {
+            print(error)
+        }
+    }
 }

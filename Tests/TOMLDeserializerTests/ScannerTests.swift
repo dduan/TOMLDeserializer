@@ -19,10 +19,14 @@ final class ScannerTests: XCTestCase {
         XCTAssertEqual(Scanner(text: "# this is a comment\r with a naughty carriage return\n").takeComment(),
                        "# this is a comment\r with a naughty carriage return")
         XCTAssertEqual(Scanner(text: "#").takeComment(), "#")
-        XCTAssertEqual(try Scanner(text: "0xdeadbee_f").takeHexIntegerWithoutSign(), 0xdeadbeef)
-        XCTAssertEqual(try Scanner(text: "0b01_01").takeBinaryIntegerWithoutSign(), 0b0101)
-        XCTAssertEqual(try Scanner(text: "0o0_171").takeOctalIntegerWithoutSign(), 0o0171)
-        XCTAssertEqual(try Scanner(text: "123_4560").takeDecimalIntegerWithoutSign(), 1234560)
+        XCTAssertEqual(try Scanner(text: "0xdeadbee_f").takeHexIntegerWithoutSign(),
+                       Array("deadbeef".utf8CString.dropLast()))
+        XCTAssertEqual(try Scanner(text: "0b01_01").takeBinaryIntegerWithoutSign(),
+                       Array("0101".utf8CString.dropLast()))
+        XCTAssertEqual(try Scanner(text: "0o0_171").takeOctalIntegerWithoutSign(),
+                       Array("0171".utf8CString.dropLast()))
+        XCTAssertEqual(try Scanner(text: "123_4560").takeDecimalIntegerWithoutSign(),
+                       Array("1234560".utf8CString.dropLast()))
         XCTAssertTrue(try ["", "#", " #", " #  ", "# abc"].allSatisfy { try Scanner(text: $0).takeTrivia() == $0 })
         XCTAssertEqual(try Scanner(text: "a. b .cd.'e'.\"\\u000A\"").takeKeys(), ["a", "b", "cd", "e", "\n"])
         XCTAssertEqual(try Scanner(text: "[ a. 'b ' ]").takeTableHeader(), ["a", "b "])

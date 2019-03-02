@@ -40,3 +40,4 @@ let cx            = "x".utf8CString.first!
 let cZ            = "Z".utf8CString.first!
 let cz            = "z".utf8CString.first!
 let cCaret        = "^".utf8CString.first!
+let cT            = "T".utf8CString.first!

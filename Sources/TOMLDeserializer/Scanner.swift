@@ -50,6 +50,10 @@ func isBareKeyCharacter(_ c: CChar) -> Bool {
     return c >= ca && c <= cz || c >= cA && c <= cZ || c >= c0 && c <= c9 || c == cMinus || c == cUnderscore
 }
 
+func isDateCharacter(_ c: CChar) -> Bool {
+    return c >= c0 && c <= c9 || c == cMinus || c == cColon || c == cPlus || c == cSpace || c == cT || c == cZ || c == cDot
+}
+
 func decimalValueOfHex(_ c: CChar) -> Int {
     if c >= c0 && c <= c9 {
         return Int(c - c0)
@@ -102,6 +106,7 @@ final class Scanner {
     }
 
     var next: CChar {
+        assert(self.cursor < self.buffer.count)
         return self.buffer[self.cursor]
     }
 
@@ -355,9 +360,9 @@ final class Scanner {
     }
 
     func takeNumber() throws -> Any {
-        var sign: Int64 = 1
+        var sign: CChar = cPlus
         if self.next == cMinus {
-            sign = -1
+            sign = cMinus
             self.cursor += 1
         } else if self.next == cPlus {
             self.cursor += 1
@@ -365,62 +370,68 @@ final class Scanner {
 
         if peek("nan") {
             self.cursor += 3
-            return sign == 1 ? Double.nan : -.nan
+            return sign == cPlus ? Double.nan : -.nan
         } else if peek("inf") {
             self.cursor += 3
-            return sign == 1 ? Double.infinity : -.infinity
+            return sign == cPlus ? Double.infinity : -.infinity
         }
 
         if self.next == c0 {
             let nextNext = self.buffer[self.cursor + 1]
             if nextNext == cx || nextNext == cX {
-                return try sign * self.takeHexIntegerWithoutSign()
+                let text = try String(terminatingCString: [sign] + self.takeHexIntegerWithoutSign())
+                return Int64(text, radix: 16) ?? 0
             } else if nextNext == co || nextNext == cO {
-                return try sign * self.takeOctalIntegerWithoutSign()
+                let text = try String(terminatingCString: [sign] + self.takeOctalIntegerWithoutSign())
+                return Int64(text, radix: 8) ?? 0
             } else if nextNext == cb || nextNext == cB{
-                return try sign * self.takeBinaryIntegerWithoutSign()
+                let text = try String(terminatingCString: [sign] + self.takeBinaryIntegerWithoutSign())
+                return Int64(text, radix: 2) ?? 0
             }
         }
 
-        let integerPart = try sign * self.takeDecimalIntegerWithoutSign()
+        let integerPart = try self.takeDecimalIntegerWithoutSign()
 
-        var fractionPart: Int64?
+        var fractionPart = [CChar]()
         if !self.isDone && self.next == cDot {
             self.cursor += 1
             fractionPart = try self.takeDecimalIntegerWithoutSign()
         }
 
-        var exponentPart: Int64?
+        var exponentPart = [CChar]()
         if !self.isDone && (self.next == ce || self.next == cE) {
             self.cursor += 1
 
-            var exponentSign: Int64 = 1
+            var exponentSign = cPlus
             if self.next == cPlus {
                 self.cursor += 1
             } else if self.next == cMinus {
-                exponentSign = -1
+                exponentSign = cMinus
                 self.cursor += 1
             }
 
-            exponentPart = try exponentSign * self.takeDecimalIntegerWithoutSign()
+            exponentPart = try [exponentSign] + self.takeDecimalIntegerWithoutSign()
         }
 
-        if fractionPart == nil && exponentPart == nil {
-            return integerPart
+        if fractionPart.isEmpty && exponentPart.isEmpty {
+            let text = String(terminatingCString: [sign] + integerPart)
+            return Int64(text) ?? 0
         }
 
-        var finalFraction = Double(fractionPart ?? 0)
-        while finalFraction >= 1 {
-            finalFraction /= 10
+        if !fractionPart.isEmpty {
+            fractionPart = [cDot] + fractionPart
         }
 
-        let finalExponent = Double(exponentPart ?? 1)
+        if !exponentPart.isEmpty {
+            exponentPart = [cE] + exponentPart
+        }
 
-        return (Double(integerPart) + finalFraction) * pow(10, finalExponent)
+        let text = String(terminatingCString: [sign] + integerPart + fractionPart + exponentPart)
+        return Double(text) ?? 0
     }
 
     // Assume sign is already handled
-    func takeInteger(isDigit: (CChar) -> Bool, shift: Int,  decimal: (CChar) -> Int64) throws -> Int64 {
+    func takeInteger(isDigit: (CChar) -> Bool, shift: Int,  decimal: (CChar) -> Int64) throws -> [CChar] {
         self.cursor += 2
         guard isDigit(self.next) else {
             throw TOMLDeserializerError(
@@ -428,10 +439,10 @@ final class Scanner {
                 location: self.cursorLocation)
         }
 
-        var result: Int64 = 0
+        var digits = [CChar]()
         while true {
             while !self.isDone && isDigit(self.next) {
-                result = result << shift + decimal(self.next)
+                digits.append(self.next)
                 self.cursor += 1
             }
 
@@ -450,21 +461,21 @@ final class Scanner {
         }
 
 
-        return result
+        return digits
 
     }
 
-    func takeDecimalIntegerWithoutSign() throws -> Int64 {
+    func takeDecimalIntegerWithoutSign() throws -> [CChar] {
         guard isDecimalDigit(self.next) else {
             throw TOMLDeserializerError(
                 summary: "Mal-formatted decimal integer",
                 location: self.cursorLocation)
         }
 
-        var result: Int64 = 0
+        var digits = [CChar]()
         while !self.isDone {
             while !self.isDone && isDecimalDigit(self.next) {
-                result = result * 10 + Int64(self.next - c0)
+                digits.append(self.next)
                 self.cursor += 1
             }
 
@@ -476,11 +487,11 @@ final class Scanner {
             break
         }
 
-        return result
+        return digits
     }
 
     // Assume sign is already handled
-    func takeHexIntegerWithoutSign() throws -> Int64 {
+    func takeHexIntegerWithoutSign() throws -> [CChar] {
         assert(self.peek("0x") || self.peek("0X"))
         return try self.takeInteger(
             isDigit: isHexDigit,
@@ -490,7 +501,7 @@ final class Scanner {
     }
 
     // Assume sign is already handled
-    func takeBinaryIntegerWithoutSign() throws -> Int64 {
+    func takeBinaryIntegerWithoutSign() throws -> [CChar] {
         assert(self.peek("0b") || self.peek("0B"))
         return try self.takeInteger(
             isDigit: isBinaryDigit,
@@ -500,7 +511,7 @@ final class Scanner {
     }
 
     // Assume sign is already handled
-    func takeOctalIntegerWithoutSign() throws -> Int64 {
+    func takeOctalIntegerWithoutSign() throws -> [CChar] {
         assert(self.peek("0o") || self.peek("0O"))
         return try self.takeInteger(
             isDigit: isOctalDigit,
@@ -605,6 +616,11 @@ final class Scanner {
 
         while !self.isDone {
             self.take(while: isWhitespace)
+            if self.next == cCloseBrace {
+                self.cursor += 1
+                break
+            }
+
             let (keys, value) = try self.takeKeyValuePair()
             try result.insert(at: keys, value)
             self.take(while: isWhitespace)
@@ -705,7 +721,7 @@ final class Scanner {
             self.buffer[self.cursor + 5] == cColon
         {
             var offset = 0
-            while self.cursor + offset < self.buffer.count && self.buffer[self.cursor + offset] != cNewline {
+            while self.cursor + offset < self.buffer.count && isDateCharacter(self.buffer[self.cursor + offset]) {
                 offset += 1
             }
 
@@ -721,13 +737,13 @@ final class Scanner {
             self.buffer[self.cursor + 7] == cMinus
         {
             var offset = 0
-            while self.cursor + offset < self.buffer.count && self.buffer[self.cursor + offset] != cNewline {
+            while self.cursor + offset < self.buffer.count && isDateCharacter(self.buffer[self.cursor + offset]) {
                 offset += 1
             }
 
             let restOfLine = Array(self.buffer[self.cursor..<self.cursor + offset])
 
-            if restOfLine.count >= 20, let dateTime = DateTime(asciiValues: restOfLine) {
+            if let dateTime = DateTime(asciiValues: restOfLine) {
                 self.cursor += dateTime.description.count
                 return dateTime
             }
