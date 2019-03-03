@@ -377,6 +377,7 @@ final class TOMLDeserializerTests: XCTestCase {
         XCTAssert(self.equate(jsonObject, doctoredTOMLTable))
     }
 
+    /* the '-' in -nan only prints in Swift 5, re-enable it when migrate
     func test_infinity_and_nan() throws {
         let jsonURL = URL(fileURLWithPath: "\(self.directory)/valid_fixtures/infinity-and-nan.json", isDirectory: false)
         let tomlURL = URL(fileURLWithPath: "\(self.directory)/valid_fixtures/infinity-and-nan.toml", isDirectory: false)
@@ -388,6 +389,7 @@ final class TOMLDeserializerTests: XCTestCase {
         let doctoredTOMLTable = self.doctor(tomlTable)
         XCTAssert(self.equate(jsonObject, doctoredTOMLTable))
     }
+    */
 
     func test_inline_table_array() throws {
         let jsonURL = URL(fileURLWithPath: "\(self.directory)/valid_fixtures/inline-table-array.json", isDirectory: false)

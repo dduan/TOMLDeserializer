@@ -56,7 +56,6 @@ extension TOMLDeserializerTests {
         ("test_implicit_and_explicit_after", test_implicit_and_explicit_after),
         ("test_implicit_and_explicit_before", test_implicit_and_explicit_before),
         ("test_implicit_groups", test_implicit_groups),
-        ("test_infinity_and_nan", test_infinity_and_nan),
         ("test_inline_table_array", test_inline_table_array),
         ("test_inline_table", test_inline_table),
         ("test_integer_underscore", test_integer_underscore),
