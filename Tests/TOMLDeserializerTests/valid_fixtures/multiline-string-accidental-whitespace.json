@@ -1,6 +1,3 @@
 {
-    "three_lines": {
-        "type": "string",
-        "value": "The quick brown fox jumps over the lazy dog."
-    }
+    "three_lines": "The quick brown fox jumps over the lazy dog."
 }
