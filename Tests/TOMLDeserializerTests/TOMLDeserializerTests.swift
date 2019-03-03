@@ -557,18 +557,6 @@ final class TOMLDeserializerTests: XCTestCase {
         XCTAssert(self.equate(jsonObject, doctoredTOMLTable))
     }
 
-    func test_multiline_string_accidental_whitespace() throws {
-        let jsonURL = URL(fileURLWithPath: "\(self.directory)/valid_fixtures/multiline-string-accidental-whitespace.json", isDirectory: false)
-        let tomlURL = URL(fileURLWithPath: "\(self.directory)/valid_fixtures/multiline-string-accidental-whitespace.toml", isDirectory: false)
-
-        let jsonData = try Data(contentsOf: jsonURL)
-        let tomlData = try Data(contentsOf: tomlURL)
-        let jsonObject = try JSONSerialization.jsonObject(with: jsonData)
-        let tomlTable = try TOMLDeserializer.tomlTable(with: tomlData)
-        let doctoredTOMLTable = self.doctor(tomlTable)
-        XCTAssert(self.equate(jsonObject, doctoredTOMLTable))
-    }
-
     func test_multiline_string() throws {
         let jsonURL = URL(fileURLWithPath: "\(self.directory)/valid_fixtures/multiline-string.json", isDirectory: false)
         let tomlURL = URL(fileURLWithPath: "\(self.directory)/valid_fixtures/multiline-string.toml", isDirectory: false)

@@ -71,7 +71,6 @@ extension TOMLDeserializerTests {
         ("test_local_time", test_local_time),
         ("test_long_float", test_long_float),
         ("test_long_integer", test_long_integer),
-        ("test_multiline_string_accidental_whitespace", test_multiline_string_accidental_whitespace),
         ("test_multiline_string", test_multiline_string),
         ("test_newline_crlf", test_newline_crlf),
         ("test_newline_lf", test_newline_lf),
