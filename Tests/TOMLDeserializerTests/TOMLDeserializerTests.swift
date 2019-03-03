@@ -8,11 +8,51 @@ final class TOMLDeserializerTests: XCTestCase {
     }
 
     private func doctor(_ table: [String: Any]) -> [String: Any] {
-        return [:]
+        func stringify(_ value: Any) -> Any {
+            if let table = value as? [String: Any] {
+                return table.reduce(into: [String: Any]()) { $0[$1.key] = stringify($1.value) }
+            }
+
+            if let array = value as? [Any] {
+                return array.reduce(into: [Any]()) { $0.append(stringify($1)) }
+            }
+
+            return "\(value)"
+        }
+
+        return stringify(table) as! [String: Any]
     }
 
     private func equate(_ a: Any, _ b: Any) -> Bool {
-        return false
+        if let a = a as? [String: Any], let b = b as? [String: Any] {
+            for (k, v) in a {
+                guard let bV = b[k] else {
+                    return false
+                }
+
+                if !self.equate(v, bV) {
+                    return false
+                }
+            }
+
+            return true
+        } else if let a = a as? [Any], let b = b as? [Any] {
+            if a.count != b.count {
+                return false
+            }
+
+            for (aV, bV) in zip(a, b) {
+                if !self.equate(aV, bV) {
+                    return false
+                }
+            }
+
+            return true
+        } else if let a = a as? String, let b = b as? String {
+            return a == b
+        } else {
+            return false
+        }
     }
 
     func test_array_empty() throws {
