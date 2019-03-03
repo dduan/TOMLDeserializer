@@ -2,12 +2,6 @@ import Foundation
 import TOMLDeserializer
 import XCTest
 
-extension URL {
-    init(fileURLWithPath: String) {
-        self.init(string: fileURLWithPath)!
-    }
-}
-
 final class TOMLDeserializerTests: XCTestCase {
     private var directory: String {
         return "/" + #file.split(separator: "/").dropLast().joined(separator: "/")
