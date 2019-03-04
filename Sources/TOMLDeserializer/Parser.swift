@@ -1,4 +1,4 @@
-extension String: Error {} // TODO: remove this
+extension String: Error {}
 extension Dictionary where Value == Any, Key == String {
     @discardableResult
     mutating func addIntoArray(at keys: [String]) throws -> Dictionary {
@@ -43,7 +43,7 @@ extension Dictionary where Value == Any, Key == String {
             {
                 // This means `table` was constructed implicitly. That's okay.
             } else {
-                throw "" // TODO: Replace with real error messages
+                throw "Duplicate key '\(key)'. Value '\(self[key]!)' already exists."
             }
         } else if let key = keys.first {
             if self[key] == nil {
@@ -59,7 +59,7 @@ extension Dictionary where Value == Any, Key == String {
                 array[array.count - 1] = try table.insert(at: Array(keys.dropFirst()), value)
                 self[key] = array
             } else {
-                throw "" // TODO: Replace with real error messages
+                throw "Conflicting values. '\(key)' has previously been set as '\(self[key]!)'"
             }
         }
 

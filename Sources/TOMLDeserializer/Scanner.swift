@@ -219,7 +219,6 @@ final class Scanner {
         return String(terminatingCString: self.buffer[startingPoint ..< self.cursor])
     }
 
-    // TODO: newline without leading backslash should be invalid
     func takeBasicString() throws -> String {
         assert(self.next == cDoubleQuote)
         self.cursor += 1
