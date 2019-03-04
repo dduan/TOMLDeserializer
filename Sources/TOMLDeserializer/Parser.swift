@@ -43,7 +43,7 @@ extension Dictionary where Value == Any, Key == String {
             {
                 // This means `table` was constructed implicitly. That's okay.
             } else {
-                throw ""
+                throw "" // TODO: Replace with real error messages
             }
         } else if let key = keys.first {
             if self[key] == nil {
@@ -58,6 +58,8 @@ extension Dictionary where Value == Any, Key == String {
             } else if var array = self[key] as? [[String: Any]], var table = array.last {
                 array[array.count - 1] = try table.insert(at: Array(keys.dropFirst()), value)
                 self[key] = array
+            } else {
+                throw "" // TODO: Replace with real error messages
             }
         }
 
