@@ -594,7 +594,7 @@ final class Scanner {
         self.take(while: isWhitespace)
         let keys = try self.takeKeys()
         self.take(while: isWhitespace)
-        guard self.next == cCloseBracket else {
+        guard !self.isDone && self.next == cCloseBracket else {
             throw TOMLDeserializerError(
                 summary: "Expected close bracket in table section header",
                 location: self.cursorLocation)
@@ -681,6 +681,12 @@ final class Scanner {
     }
 
     func takeValue() throws -> Any {
+        guard !self.isDone else {
+            throw TOMLDeserializerError(
+                summary: "Unexpected end of file",
+                location: self.cursorLocation)
+        }
+
         let leftOver = self.leftOver
         if self.next == cf {
             try self.take("false")
