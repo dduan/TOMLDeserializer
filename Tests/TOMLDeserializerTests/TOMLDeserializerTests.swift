@@ -602,9 +602,14 @@ final class TOMLDeserializerTests: XCTestCase {
         let jsonData = try Data(contentsOf: jsonURL)
         let tomlData = try Data(contentsOf: tomlURL)
         let jsonObject = try JSONSerialization.jsonObject(with: jsonData)
-        let tomlTable = try TOMLDeserializer.tomlTable(with: tomlData)
-        let doctoredTOMLTable = self.doctor(tomlTable)
-        XCTAssert(self.equate(jsonObject, doctoredTOMLTable))
+        do {
+            let tomlTable = try TOMLDeserializer.tomlTable(with: tomlData)
+            let doctoredTOMLTable = self.doctor(tomlTable)
+            XCTAssert(self.equate(jsonObject, doctoredTOMLTable))
+        } catch let error {
+            print(error)
+        }
+
     }
 
     func test_raw_multiline_string() throws {

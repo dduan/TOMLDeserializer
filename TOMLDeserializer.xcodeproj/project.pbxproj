@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		370138C5222BA7F10067B32E /* TOMLInvalidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370138C4222BA7F10067B32E /* TOMLInvalidationTests.swift */; };
 		37D5B8E2221A3C5B004E086E /* TOMLDeserializer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D5B8D8221A3C5B004E086E /* TOMLDeserializer.framework */; };
 		37D5B8FB221A3CB3004E086E /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5B8F4221A3CB3004E086E /* constants.swift */; };
 		E36586FE2228E1100046325B /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36586FB2228E1100046325B /* Location.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		370138C4222BA7F10067B32E /* TOMLInvalidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOMLInvalidationTests.swift; sourceTree = "<group>"; };
 		37D5B8D8221A3C5B004E086E /* TOMLDeserializer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TOMLDeserializer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		37D5B8E1221A3C5B004E086E /* TOMLDeserializerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TOMLDeserializerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		37D5B8F4221A3CB3004E086E /* constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				E3ABEBDB22267C27005851DB /* ScannerTests.swift */,
 				E3ABEBDA22267C27005851DB /* TOMLDeserializerTests.swift */,
 				E36586FF2228EDA30046325B /* ErrorTests.swift */,
+				370138C4222BA7F10067B32E /* TOMLInvalidationTests.swift */,
 			);
 			path = TOMLDeserializerTests;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 				E3ABEBDD22267C27005851DB /* ScannerTests.swift in Sources */,
 				E3ABEBDC22267C27005851DB /* TOMLDeserializerTests.swift in Sources */,
 				E36587012228EDC30046325B /* ErrorTests.swift in Sources */,
+				370138C5222BA7F10067B32E /* TOMLInvalidationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,13 +372,7 @@
 			buildSettings = {
 				DEFINES_MODULE = YES;
 				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
-					"$(PROJECT_DIR)/Carthage/Build/watchOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = ca.duan.TOMLDeserializer;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -390,13 +388,7 @@
 			buildSettings = {
 				DEFINES_MODULE = YES;
 				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
-					"$(PROJECT_DIR)/Carthage/Build/watchOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = ca.duan.TOMLDeserializer;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -411,13 +403,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 37D5B918221A3CD9004E086E /* UniversalFramework_Test.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
-					"$(PROJECT_DIR)/Carthage/Build/watchOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.duan.TOMLDeserializerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -429,13 +415,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 37D5B918221A3CD9004E086E /* UniversalFramework_Test.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
-					"$(PROJECT_DIR)/Carthage/Build/watchOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.duan.TOMLDeserializerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_COMPILATION_MODE = wholemodule;

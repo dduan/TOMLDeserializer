@@ -3,11 +3,15 @@ extension Dictionary where Value == Any, Key == String {
     @discardableResult
     mutating func addIntoArray(at keys: [String]) throws -> Dictionary {
         if keys.count == 1, let key = keys.last {
-            if var array = self[key] as? [[String: Any]] {
+            if self[key] == nil {
+                self[key] = [[String: Any]()]
+            } else if let array = self[key] as? [[String: Any]], array.isEmpty {
+                throw "Dulicate array definition."
+            } else if var array = self[key] as? [[String: Any]] {
                 array.append([String: Any]())
                 self[key] = array
-            } else if self[key] == nil {
-                self[key] = [[String: Any]()]
+            } else  {
+                throw "Duplicate key \(key), \(self[key]!) already exists."
             }
         } else if let key = keys.first {
             if self[key] == nil {
@@ -34,6 +38,12 @@ extension Dictionary where Value == Any, Key == String {
         if keys.count == 1, let key = keys.last {
             if self[key] == nil {
                 self[key] = value
+            } else if let table = self[key] as? [String: Any],
+                table.values.contains(where: { $0 is [String: Any] })
+            {
+                // This means `table` was constructed implicitly. That's okay.
+            } else {
+                throw "Duplicate key '\(key)'. Value '\(self[key]!)' already exists."
             }
         } else if let key = keys.first {
             if self[key] == nil {
@@ -48,6 +58,8 @@ extension Dictionary where Value == Any, Key == String {
             } else if var array = self[key] as? [[String: Any]], var table = array.last {
                 array[array.count - 1] = try table.insert(at: Array(keys.dropFirst()), value)
                 self[key] = array
+            } else {
+                throw "Conflicting values. '\(key)' has previously been set as '\(self[key]!)'"
             }
         }
 
@@ -64,6 +76,7 @@ final class Parser {
     }
 
     func parse() throws -> [String: Any] {
+        self.activePath = []
         self.scanner.cursor = 0
         var result = [String: Any]()
         while !self.scanner.isDone {
@@ -74,12 +87,23 @@ final class Parser {
 
             if self.scanner.peek("[[") {
                 self.activePath = try self.scanner.takeArrayHeader()
-                try result.addIntoArray(at: self.activePath)
+                do {
+                    try result.addIntoArray(at: self.activePath)
+                } catch let error {
+                    throw TOMLDeserializerError(
+                        summary: "\(error)", location: self.scanner.cursorLocation)
+                }
             } else if self.scanner.next == cOpenBracket {
                 self.activePath = try self.scanner.takeTableHeader()
-                try result.insert(at: self.activePath, [String: Any]())
+                do {
+                    try result.insert(at: self.activePath, [String: Any]())
+                } catch let error {
+                    throw TOMLDeserializerError(
+                        summary: "\(error)", location: self.scanner.cursorLocation)
+                }
             } else {
                 let (keys, value) = try self.scanner.takeKeyValuePair()
+                try self.scanner.takeTriviaUntilEndOfLine()
                 try result.insert(at: activePath + keys, value)
             }
         }
