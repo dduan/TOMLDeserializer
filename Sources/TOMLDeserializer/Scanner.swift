@@ -70,6 +70,10 @@ func decimalValueOfHex(_ c: CChar) -> Int {
     return 0
 }
 
+func isControlCharacter(_ c: CChar) -> Bool {
+    return (c >= 0x0000 && c <= 0x001f || c == 0x007f) && c != cNewline && c != cCR
+}
+
 final class Scanner {
     var cursor = 0
     var buffer: [CChar]
@@ -161,10 +165,16 @@ final class Scanner {
         assert(self.next == cSingleQuote)
         self.cursor += 1
 
-        let text = self.take(until: { $0 == cSingleQuote })
+        let text = self.take(until: { $0 == cSingleQuote || isControlCharacter($0) })
         if self.isDone {
             throw TOMLDeserializerError(
                 summary: "Malformed literal string",
+                location: self.cursorLocation)
+        }
+
+        if isControlCharacter(self.next) {
+            throw TOMLDeserializerError(
+                summary: "Control characters must be escaped.",
                 location: self.cursorLocation)
         }
 
@@ -181,12 +191,19 @@ final class Scanner {
 
         let startingPoint = self.cursor
         while !self.isDone {
-            self.take(until: { $0 == cSingleQuote })
+            self.take(until: { $0 == cSingleQuote || isControlCharacter($0) })
             if self.isDone {
                 throw TOMLDeserializerError(
                     summary: "Malformed literal string",
                     location: self.cursorLocation)
             }
+
+            if isControlCharacter(self.next) {
+                throw TOMLDeserializerError(
+                    summary: "Control characters must be escaped.",
+                    location: self.cursorLocation)
+            }
+
             if self.buffer[self.cursor] == cSingleQuote,
                 self.buffer[self.cursor + 1] == cSingleQuote,
                 self.buffer[self.cursor + 2] == cSingleQuote
@@ -209,10 +226,16 @@ final class Scanner {
 
         var text = ""
         while true {
-            let segment = self.take(until: { $0 == cDoubleQuote || $0 == cBackslash })
+            let segment = self.take(until: { $0 == cDoubleQuote || $0 == cBackslash || isControlCharacter($0) })
             if self.isDone {
                 throw TOMLDeserializerError(
                     summary: "Malformed basic string",
+                    location: self.cursorLocation)
+            }
+
+            if isControlCharacter(self.next) {
+                throw TOMLDeserializerError(
+                    summary: "Control characters must be escaped.",
                     location: self.cursorLocation)
             }
 
@@ -249,10 +272,16 @@ final class Scanner {
 
         var text = ""
         while !self.isDone {
-            let segment = self.take(until: { $0 == cDoubleQuote || $0 == cBackslash })
+            let segment = self.take(until: { $0 == cDoubleQuote || $0 == cBackslash || isControlCharacter($0) })
             if self.isDone {
                 throw TOMLDeserializerError(
                     summary: "Malformed multi-line string",
+                    location: self.cursorLocation)
+            }
+
+            if isControlCharacter(self.next) {
+                throw TOMLDeserializerError(
+                    summary: "Control characters must be escaped.",
                     location: self.cursorLocation)
             }
 
@@ -355,7 +384,6 @@ final class Scanner {
         } while !self.isDone && self.endOfLine == -1
 
         let result = String(terminatingCString: self.buffer[startingPoint ..< self.cursor])
-        self.cursor += self.endOfLine
         return result
     }
 
@@ -376,7 +404,8 @@ final class Scanner {
             return sign == cPlus ? Double.infinity : -.infinity
         }
 
-        if self.next == c0 {
+        let hasLeadingZero = self.next == c0
+        if hasLeadingZero {
             let nextNext = self.buffer[self.cursor + 1]
             if nextNext == cx || nextNext == cX {
                 let text = try String(terminatingCString: [sign] + self.takeHexIntegerWithoutSign())
@@ -388,9 +417,15 @@ final class Scanner {
                 let text = try String(terminatingCString: [sign] + self.takeBinaryIntegerWithoutSign())
                 return Int64(text, radix: 2) ?? 0
             }
+
         }
 
         let integerPart = try self.takeDecimalIntegerWithoutSign()
+        if hasLeadingZero && integerPart.count != 1 {
+            throw TOMLDeserializerError(
+                summary: "Leading zero are not allowed in numbers.",
+                location: self.cursorLocation)
+        }
 
         var fractionPart = [CChar]()
         if !self.isDone && self.next == cDot {
@@ -415,7 +450,14 @@ final class Scanner {
 
         if fractionPart.isEmpty && exponentPart.isEmpty {
             let text = String(terminatingCString: [sign] + integerPart)
-            return Int64(text) ?? 0
+
+            guard let integer = Int64(text) else {
+                throw TOMLDeserializerError(
+                    summary: "Invalid characters in integer.",
+                    location: self.cursorLocation)
+            }
+
+            return integer
         }
 
         if !fractionPart.isEmpty {
@@ -427,7 +469,13 @@ final class Scanner {
         }
 
         let text = String(terminatingCString: [sign] + integerPart + fractionPart + exponentPart)
-        return Double(text) ?? 0
+        guard let double = Double(text) else {
+            throw TOMLDeserializerError(
+                summary: "Invalid characters in floating number.",
+                location: self.cursorLocation)
+        }
+
+        return double
     }
 
     // Assume sign is already handled
@@ -456,7 +504,6 @@ final class Scanner {
                     location: self.cursorLocation)
             }
 
-            self.cursor += eolCount
             break
         }
 
@@ -473,15 +520,31 @@ final class Scanner {
         }
 
         var digits = [CChar]()
+        var justSawUnderscore = false
         while !self.isDone {
+
             while !self.isDone && isDecimalDigit(self.next) {
                 digits.append(self.next)
                 self.cursor += 1
+                justSawUnderscore = false
             }
 
             if !self.isDone && self.next == cUnderscore {
+                if justSawUnderscore {
+                    throw TOMLDeserializerError(
+                        summary: "Unexpected '_' in number.",
+                        location: self.cursorLocation)
+                }
+
                 self.cursor += 1
+                justSawUnderscore = true
                 continue
+            }
+
+            if justSawUnderscore {
+                throw TOMLDeserializerError(
+                    summary: "Unexpected '_' in number.",
+                    location: self.cursorLocation)
             }
 
             break
@@ -538,6 +601,31 @@ final class Scanner {
         return String(terminatingCString: self.buffer[startingPoint ..< self.cursor])
     }
 
+    @discardableResult
+    func takeTriviaUntilEndOfLine() throws -> String {
+        let startingPoint = self.cursor
+        while !self.isDone {
+            if isWhitespace(self.next) {
+                self.take(while: isWhitespace)
+            } else if self.next == cHashtag {
+                self.takeComment()
+            } else {
+                break
+            }
+        }
+
+        let eolCount = self.endOfLine
+        if eolCount == -1 && !self.isDone {
+            throw TOMLDeserializerError(
+                summary: "Unexpected characters.",
+                location: self.cursorLocation)
+        }
+
+        defer { self.cursor += eolCount }
+
+        return String(terminatingCString: self.buffer[startingPoint ..< self.cursor])
+    }
+
     func takeKeys() throws -> [String] {
         var result = [String]()
         while !self.isDone {
@@ -581,6 +669,8 @@ final class Scanner {
                 location: self.cursorLocation)
         }
         self.cursor += 2
+
+        try self.takeTriviaUntilEndOfLine()
         return keys
     }
 
@@ -600,6 +690,8 @@ final class Scanner {
                 location: self.cursorLocation)
         }
         self.cursor += 1
+
+        try self.takeTriviaUntilEndOfLine()
         return keys
     }
 

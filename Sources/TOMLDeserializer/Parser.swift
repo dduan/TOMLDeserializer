@@ -101,6 +101,7 @@ final class Parser {
                 }
             } else {
                 let (keys, value) = try self.scanner.takeKeyValuePair()
+                try self.scanner.takeTriviaUntilEndOfLine()
                 try result.insert(at: activePath + keys, value)
             }
         }
