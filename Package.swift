@@ -10,7 +10,7 @@ let package = Package(
             targets: ["TOMLDeserializer"])
     ],
     dependencies: [
-        .package(url: "https://github.com/dduan/NetTime", from: "0.0.4")
+        .package(url: "https://github.com/dduan/NetTime", from: "0.1.0")
     ],
     targets: [
         .target(
