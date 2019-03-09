@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		370138C5222BA7F10067B32E /* TOMLInvalidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370138C4222BA7F10067B32E /* TOMLInvalidationTests.swift */; };
+		373161AF22348035009A480F /* NetTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 373161AE22348035009A480F /* NetTime.framework */; };
 		37D5B8E2221A3C5B004E086E /* TOMLDeserializer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D5B8D8221A3C5B004E086E /* TOMLDeserializer.framework */; };
 		37D5B8FB221A3CB3004E086E /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5B8F4221A3CB3004E086E /* constants.swift */; };
 		E36586FE2228E1100046325B /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36586FB2228E1100046325B /* Location.swift */; };
@@ -18,7 +19,6 @@
 		E3ABEBD922267C11005851DB /* Scanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3ABEBD522267C11005851DB /* Scanner.swift */; };
 		E3ABEBDC22267C27005851DB /* TOMLDeserializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3ABEBDA22267C27005851DB /* TOMLDeserializerTests.swift */; };
 		E3ABEBDD22267C27005851DB /* ScannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3ABEBDB22267C27005851DB /* ScannerTests.swift */; };
-		E3ABEBFE22268171005851DB /* NetTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3ABEBF82226814D005851DB /* NetTime.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,24 +29,11 @@
 			remoteGlobalIDString = 37D5B8D7221A3C5B004E086E;
 			remoteInfo = TOMLDeserializer;
 		};
-		E3ABEBF72226814D005851DB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E3ABEBF22226814D005851DB /* NetTime.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 37D5B8D8221A3C5B004E086E;
-			remoteInfo = NetTime;
-		};
-		E3ABEBF92226814D005851DB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E3ABEBF22226814D005851DB /* NetTime.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 37D5B8E1221A3C5B004E086E;
-			remoteInfo = NetTimeTests;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		370138C4222BA7F10067B32E /* TOMLInvalidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOMLInvalidationTests.swift; sourceTree = "<group>"; };
+		373161AE22348035009A480F /* NetTime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NetTime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		37D5B8D8221A3C5B004E086E /* TOMLDeserializer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TOMLDeserializer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		37D5B8E1221A3C5B004E086E /* TOMLDeserializerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TOMLDeserializerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		37D5B8F4221A3CB3004E086E /* constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
@@ -63,7 +50,6 @@
 		E3ABEBD522267C11005851DB /* Scanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scanner.swift; sourceTree = "<group>"; };
 		E3ABEBDA22267C27005851DB /* TOMLDeserializerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOMLDeserializerTests.swift; sourceTree = "<group>"; };
 		E3ABEBDB22267C27005851DB /* ScannerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerTests.swift; sourceTree = "<group>"; };
-		E3ABEBF22226814D005851DB /* NetTime.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NetTime.xcodeproj; path = Dependencies/NetTime/NetTime.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E3ABEBFE22268171005851DB /* NetTime.framework in Frameworks */,
+				373161AF22348035009A480F /* NetTime.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,7 +75,6 @@
 		37D5B8CC221A3C20004E086E = {
 			isa = PBXGroup;
 			children = (
-				E3ABEBF22226814D005851DB /* NetTime.xcodeproj */,
 				37D5B8F2221A3CB3004E086E /* Sources */,
 				37D5B902221A3CC1004E086E /* Tests */,
 				37D5B912221A3CD9004E086E /* Resources */,
@@ -170,17 +155,9 @@
 		E3ABEBF022267F6C005851DB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				373161AE22348035009A480F /* NetTime.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		E3ABEBF32226814D005851DB /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E3ABEBF82226814D005851DB /* NetTime.framework */,
-				E3ABEBFA2226814D005851DB /* NetTimeTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,12 +236,6 @@
 			mainGroup = 37D5B8CC221A3C20004E086E;
 			productRefGroup = 37D5B8D9221A3C5B004E086E /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = E3ABEBF32226814D005851DB /* Products */;
-					ProjectRef = E3ABEBF22226814D005851DB /* NetTime.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				37D5B8D7221A3C5B004E086E /* TOMLDeserializer */,
@@ -272,23 +243,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		E3ABEBF82226814D005851DB /* NetTime.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = NetTime.framework;
-			remoteRef = E3ABEBF72226814D005851DB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E3ABEBFA2226814D005851DB /* NetTimeTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = NetTimeTests.xctest;
-			remoteRef = E3ABEBF92226814D005851DB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		37D5B8D6221A3C5B004E086E /* Resources */ = {
