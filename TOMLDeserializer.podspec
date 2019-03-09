@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
   spec.name                      = "TOMLDeserializer"
   spec.version                   = "0.1.1"
-  spec.summary                   = "RFC  compliant date/time data types."
+  spec.summary                   = "Turn TOML data into Swift objects."
   spec.homepage                  = "https://github.com/dduan/TOMLDeserializer"
   spec.license                   = { :type => "MIT", :file => "LICENSE.md" }
   spec.author                    = { "Daniel Duan" => "daniel@duan.ca" }
