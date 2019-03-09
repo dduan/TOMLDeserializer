@@ -48,7 +48,7 @@ test-CocoaPods:
 test-iOS:
 	set -o pipefail && \
 		xcodebuild \
-		-project TOMLDeserializer.xcodeproj \
+		-workspace TOMLDeserializer.xcworkspace \
 		-scheme TOMLDeserializer \
 		-configuration Release \
 		-destination "name=iPhone X,OS=12.1" \
@@ -57,7 +57,7 @@ test-iOS:
 test-macOS:
 	set -o pipefail && \
 		xcodebuild \
-		-project TOMLDeserializer.xcodeproj \
+		-workspace TOMLDeserializer.xcworkspace \
 		-scheme TOMLDeserializer \
 		-configuration Release \
 		test \
@@ -65,7 +65,7 @@ test-macOS:
 test-tvOS:
 	set -o pipefail && \
 		xcodebuild \
-		-project TOMLDeserializer.xcodeproj \
+		-workspace TOMLDeserializer.xcworkspace \
 		-scheme TOMLDeserializer \
 		-configuration Release \
 		-destination "platform=tvOS Simulator,name=Apple TV,OS=12.1" \
