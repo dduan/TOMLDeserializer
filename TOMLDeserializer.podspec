@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name                      = "TOMLDeserializer"
-  spec.version                   = "0.1.1"
+  spec.version                   = "0.1.2"
   spec.summary                   = "Turn TOML data into Swift objects."
   spec.homepage                  = "https://github.com/dduan/TOMLDeserializer"
   spec.license                   = { :type => "MIT", :file => "LICENSE.md" }
