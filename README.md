@@ -8,7 +8,10 @@ try TOMLDeserializer.tomlTable(with: data) // [String: Any]
 
 Compatible with [TOML v0.5.0][]
 
+Unless you have a good reason not to, [TOMLDecoder][] is probably a better choice for your TOML needs.
+
 [TOML v0.5.0]: https://github.com/toml-lang/toml/blob/master/versions/en/toml-v0.5.0.md
+[TOMLDecoder]: https://github.com/dduan/TOMLDeserializer
 
 ## Installation
 
