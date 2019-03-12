@@ -1,4 +1,4 @@
-# TOMLDeserialization
+# TOMLDeserializer
 
 Turn TOML data into Swift objects.
 
