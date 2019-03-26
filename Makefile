@@ -51,7 +51,7 @@ test-iOS:
 		-workspace TOMLDeserializer.xcworkspace \
 		-scheme TOMLDeserializer \
 		-configuration Release \
-		-destination "name=iPhone X,OS=12.1" \
+		-destination "name=iPhone X,OS=12.2" \
 		test
 
 test-macOS:
@@ -68,7 +68,7 @@ test-tvOS:
 		-workspace TOMLDeserializer.xcworkspace \
 		-scheme TOMLDeserializer \
 		-configuration Release \
-		-destination "platform=tvOS Simulator,name=Apple TV,OS=12.1" \
+		-destination "platform=tvOS Simulator,name=Apple TV,OS=12.2" \
 		test \
 
 test-carthage:

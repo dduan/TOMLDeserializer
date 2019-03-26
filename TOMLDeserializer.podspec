@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name                      = "TOMLDeserializer"
-  spec.version                   = "0.1.3"
+  spec.version                   = "0.2.3"
   spec.summary                   = "Turn TOML data into Swift objects."
   spec.homepage                  = "https://github.com/dduan/TOMLDeserializer"
   spec.license                   = { :type => "MIT", :file => "LICENSE.md" }
@@ -10,10 +10,10 @@ Pod::Spec.new do |spec|
   spec.osx.deployment_target     = "10.10"
   spec.tvos.deployment_target    = "9.0"
   spec.watchos.deployment_target = "2.0"
-  spec.swift_version             = '4.2.1'
+  spec.swift_version             = '5.0'
   spec.source                    = { :git => "https://github.com/dduan/TOMLDeserializer.git", :tag => "#{spec.version}" }
   spec.source_files              = "Sources/**/*.swift"
   spec.requires_arc              = true
   spec.module_name               = "TOMLDeserializer"
-  spec.dependency  "NetTime", '~> 0.1.1'
+  spec.dependency  "NetTime", '~> 0.2.1'
 end
