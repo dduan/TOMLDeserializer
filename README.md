@@ -26,7 +26,7 @@ pod "TOMLDeserializer"
 #### With [SwiftPM](https://swift.org/package-manager)
 
 ```swift
-.package(url: "https://github.com/dduan/TOMLDeserializer", from: "0.1.3")
+.package(url: "https://github.com/dduan/TOMLDeserializer", from: "0.2.3")
 ```
 
 #### With [Carthage](https://github.com/Carthage/Carthage)
