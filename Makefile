@@ -39,8 +39,7 @@ install-%: fetch-dependencies
 test-SwiftPM: test
 
 install-CocoaPods:
-	pod repo update
-	sudo gem install cocoapods -v 1.6.0
+	sudo gem install cocoapods -v 1.8.3
 
 test-CocoaPods:
 	pod lib lint --verbose
@@ -51,7 +50,7 @@ test-iOS:
 		-workspace TOMLDeserializer.xcworkspace \
 		-scheme TOMLDeserializer \
 		-configuration Release \
-		-destination "name=iPhone X,OS=12.2" \
+		-destination "name=iPhone 11,OS=13.1" \
 		test
 
 test-macOS:
@@ -68,7 +67,7 @@ test-tvOS:
 		-workspace TOMLDeserializer.xcworkspace \
 		-scheme TOMLDeserializer \
 		-configuration Release \
-		-destination "platform=tvOS Simulator,name=Apple TV,OS=12.2" \
+		-destination "platform=tvOS Simulator,name=Apple TV,OS=13.0" \
 		test \
 
 test-carthage:
