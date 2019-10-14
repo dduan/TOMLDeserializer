@@ -40,6 +40,7 @@ test-SwiftPM: test
 
 install-CocoaPods:
 	sudo gem install cocoapods -v 1.8.3
+	pod repo update
 
 test-CocoaPods:
 	pod lib lint --verbose
