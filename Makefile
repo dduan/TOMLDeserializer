@@ -16,10 +16,7 @@ fetch-dependencies:
 	@Scripts/fetch-dependencies.py
 
 test-docker:
-	@Scripts/run-tests-linux-docker.sh
-
-develop-docker:
-	@Scripts/develop-linux-docker.sh
+	@Scripts/ubuntu.sh TOMLDeserializer test 5.1.1 bionic
 
 clean-carthage:
 	@echo "Deleting Carthage artifacts…"
