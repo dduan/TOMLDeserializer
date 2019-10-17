@@ -8,9 +8,16 @@ xcode:
 	@swift package generate-xcodeproj
 
 update-linux-test-manifest:
+ifeq ($(shell uname),Darwin)
 	@rm Tests/TOMLDeserializerTests/XCTestManifests.swift
 	@touch Tests/TOMLDeserializerTests/XCTestManifests.swift
 	@swift test --generate-linuxmain
+else
+	@echo "Only works on macOS"
+endif
+
+test-codegen: update-linux-test-manifest
+	@git diff --exit-code
 
 fetch-dependencies:
 	@Scripts/fetch-dependencies.py
