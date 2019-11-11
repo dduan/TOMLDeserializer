@@ -34,11 +34,11 @@ clean-carthage:
 carthage-archive: clean-carthage install-carthage
 	@carthage build --archive
 
-install-carthage: generate-xcodeproj
+install-carthage:
 	brew update
 	brew outdated carthage || brew upgrade carthage
 
-install-%: generate-xcodeproj
+install-%:
 	true
 
 test-SwiftPM: test
