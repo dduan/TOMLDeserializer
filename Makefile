@@ -7,13 +7,14 @@ test:
 xcode:
 	@swift package generate-xcodeproj
 
+generate-xcodeproj:
+	Scripts/ensure-xcodegen.sh
+	tmp/xcodegen
+
 update-linux-test-manifest:
 	@rm Tests/TOMLDeserializerTests/XCTestManifests.swift
 	@touch Tests/TOMLDeserializerTests/XCTestManifests.swift
 	@swift test --generate-linuxmain
-
-fetch-dependencies:
-	@Scripts/fetch-dependencies.py
 
 test-docker:
 	@Scripts/ubuntu.sh TOMLDeserializer test 5.1.1 bionic
@@ -26,11 +27,11 @@ clean-carthage:
 carthage-archive: clean-carthage install-carthage
 	@carthage build --archive
 
-install-carthage: fetch-dependencies
+install-carthage: generate-xcodeproj
 	brew update
 	brew outdated carthage || brew upgrade carthage
 
-install-%: fetch-dependencies
+install-%: generate-xcodeproj
 	true
 
 test-SwiftPM: test
@@ -44,7 +45,7 @@ test-CocoaPods:
 test-iOS:
 	set -o pipefail && \
 		xcodebuild \
-		-workspace TOMLDeserializer.xcworkspace \
+		-project TOMLDeserializer.xcodeproj \
 		-scheme TOMLDeserializer \
 		-configuration Release \
 		-destination "name=iPhone 11,OS=13.1" \
@@ -53,7 +54,7 @@ test-iOS:
 test-macOS:
 	set -o pipefail && \
 		xcodebuild \
-		-workspace TOMLDeserializer.xcworkspace \
+		-project TOMLDeserializer.xcodeproj \
 		-scheme TOMLDeserializer \
 		-configuration Release \
 		test \
@@ -61,7 +62,7 @@ test-macOS:
 test-tvOS:
 	set -o pipefail && \
 		xcodebuild \
-		-workspace TOMLDeserializer.xcworkspace \
+		-project TOMLDeserializer.xcodeproj \
 		-scheme TOMLDeserializer \
 		-configuration Release \
 		-destination "platform=tvOS Simulator,name=Apple TV,OS=13.0" \

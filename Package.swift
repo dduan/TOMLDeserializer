@@ -18,6 +18,10 @@ let package = Package(
             dependencies: ["NetTime"]),
         .testTarget(
             name: "TOMLDeserializerTests",
-            dependencies: ["TOMLDeserializer", "NetTime"]),
+            dependencies: ["TOMLDeserializer", "NetTime"],
+            exclude: [
+                "Tests/DrStringTests/invalid_fixtures",
+                "Tests/DrStringTests/valid_fixtures",
+            ]),
     ]
 )

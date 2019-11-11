@@ -6,3 +6,4 @@ Carthage
 TOMLDeserializer.framework.zip
 Dependencies/NetTime
 .swiftpm
+tmp
