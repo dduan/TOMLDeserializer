@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1010"
+   LastUpgradeVersion = "1020"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "37D5B8D7221A3C5B004E086E"
+               BlueprintIdentifier = "7DC4081480DE65061E4D48B8"
                BuildableName = "TOMLDeserializer.framework"
                BlueprintName = "TOMLDeserializer"
                ReferencedContainer = "container:TOMLDeserializer.xcodeproj">
@@ -26,13 +26,14 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      onlyGenerateCoverageForSpecifiedTargets = "NO"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "37D5B8E0221A3C5B004E086E"
+               BlueprintIdentifier = "FF090E9BADE944FF2D9243A8"
                BuildableName = "TOMLDeserializerTests.xctest"
                BlueprintName = "TOMLDeserializerTests"
                ReferencedContainer = "container:TOMLDeserializer.xcodeproj">
@@ -42,14 +43,18 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "37D5B8D7221A3C5B004E086E"
+            BlueprintIdentifier = "7DC4081480DE65061E4D48B8"
             BuildableName = "TOMLDeserializer.framework"
             BlueprintName = "TOMLDeserializer"
             ReferencedContainer = "container:TOMLDeserializer.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <CommandLineArguments>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
+      <CodeCoverageTargets>
+      </CodeCoverageTargets>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -64,12 +69,14 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "37D5B8D7221A3C5B004E086E"
+            BlueprintIdentifier = "7DC4081480DE65061E4D48B8"
             BuildableName = "TOMLDeserializer.framework"
             BlueprintName = "TOMLDeserializer"
             ReferencedContainer = "container:TOMLDeserializer.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <CommandLineArguments>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -79,15 +86,18 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "37D5B8D7221A3C5B004E086E"
+            BlueprintIdentifier = "7DC4081480DE65061E4D48B8"
             BuildableName = "TOMLDeserializer.framework"
             BlueprintName = "TOMLDeserializer"
             ReferencedContainer = "container:TOMLDeserializer.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
+      <CommandLineArguments>
+      </CommandLineArguments>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

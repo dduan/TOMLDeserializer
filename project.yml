@@ -1,0 +1,34 @@
+packages:
+  NetTime:
+    url: https://github.com/dduan/NetTime
+    minorVersion: 0.2.2
+name: TOMLDeserializer
+targets:
+  TOMLDeserializer:
+    type: framework
+    path: Sources/TOMLDeserializer
+    platform: macOS
+    settings:
+      INFOPLIST_FILE: Resources/Info.plist
+    configFiles:
+      Debug: Resources/xcconfigs/TOMLDeserializer_Debug.xcconfig
+      Release: Resources/xcconfigs/TOMLDeserializer_Release.xcconfig
+    sources: Sources/TOMLDeserializer/
+    scheme:
+      testTargets:
+        - TOMLDeserializerTests
+    dependencies:
+      - package: NetTime
+  TOMLDeserializerTests:
+    type: bundle.unit-test
+    codeSign: false
+    platform: macOS
+    sources:
+      - path: Tests/TOMLDeserializerTests
+        excludes:
+          - "*valid_fixtures/*"
+    dependencies:
+      - target: TOMLDeserializer
+    configFiles:
+      Debug: Resources/xcconfigs/UniversalFramework_Test.xcconfig
+      Release: Resources/xcconfigs/UniversalFramework_Test.xcconfig
