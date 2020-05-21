@@ -31,6 +31,11 @@ extension Scanner {
         }
 
         let localText = String(terminatingCString: content)
-        return Location(localText: localText, line: line + 1, column: column - 1, bufferOffset: originalCursor - 1)
+        return Location(
+            localText: localText,
+            line: line + 1,
+            column: max(0, column - 1),
+            bufferOffset: max(0, originalCursor - 1)
+        )
     }
 }
