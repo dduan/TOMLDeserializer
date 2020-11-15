@@ -24,7 +24,7 @@ test-codegen: update-linux-test-manifest
 	@git diff --exit-code
 
 test-docker:
-	@Scripts/ubuntu.sh TOMLDeserializer test 5.1.1 bionic
+	@Scripts/docker.sh TOMLDeserializer 'swift test -Xswiftc -warnings-as-errors' 5.2.5 focal
 
 clean-carthage:
 	@echo "Deleting Carthage artifacts…"
