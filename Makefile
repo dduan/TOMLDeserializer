@@ -17,7 +17,7 @@ test-codegen: update-linux-test-manifest
 	@git diff --exit-code
 
 test-docker:
-	@Scripts/ubuntu.sh TOMLDeserializer test 5.1.1 bionic
+	@Scripts/ubuntu.sh TOMLDeserializer test 5.3.2 bionic
 
 install-%:
 	true
