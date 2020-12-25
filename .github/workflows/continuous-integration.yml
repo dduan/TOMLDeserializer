@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Xcode version
-      run: sudo xcode-select -s /Applications/Xcode_11.1.app
+      run: sudo xcode-select -s /Applications/Xcode_12.3.app
     - name: Prepare And Test
       run: make install-${{ matrix.action }} && make test-${{ matrix.action }}
 
@@ -23,7 +23,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Xcode version
-      run: sudo xcode-select -s /Applications/Xcode_11.1.app
+      run: sudo xcode-select -s /Applications/Xcode_12.3.app
     - name: Ensure code are generated
       run: make test-codegen
 
