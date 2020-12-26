@@ -6,30 +6,6 @@ final class TOMLInvalidationTests: XCTestCase {
         return "/" + #file.split(separator: "/").dropLast().joined(separator: "/")
     }
 
-    func test_array_7() throws {
-        let tomlURL = URL(fileURLWithPath: "\(self.directory)/invalid_fixtures/array-7.toml", isDirectory: false)
-        let tomlData = try Data(contentsOf: tomlURL)
-        XCTAssertThrowsError(try TOMLDeserializer.tomlTable(with: tomlData))
-    }
-
-    func test_array_mixed_types_arrays_and_ints() throws {
-        let tomlURL = URL(fileURLWithPath: "\(self.directory)/invalid_fixtures/array-mixed-types-arrays-and-ints.toml", isDirectory: false)
-        let tomlData = try Data(contentsOf: tomlURL)
-        XCTAssertThrowsError(try TOMLDeserializer.tomlTable(with: tomlData))
-    }
-
-    func test_array_mixed_types_ints_and_floats() throws {
-        let tomlURL = URL(fileURLWithPath: "\(self.directory)/invalid_fixtures/array-mixed-types-ints-and-floats.toml", isDirectory: false)
-        let tomlData = try Data(contentsOf: tomlURL)
-        XCTAssertThrowsError(try TOMLDeserializer.tomlTable(with: tomlData))
-    }
-
-    func test_array_mixed_types_strings_and_ints() throws {
-        let tomlURL = URL(fileURLWithPath: "\(self.directory)/invalid_fixtures/array-mixed-types-strings-and-ints.toml", isDirectory: false)
-        let tomlData = try Data(contentsOf: tomlURL)
-        XCTAssertThrowsError(try TOMLDeserializer.tomlTable(with: tomlData))
-    }
-
     func test_array_of_tables_1() throws {
         let tomlURL = URL(fileURLWithPath: "\(self.directory)/invalid_fixtures/array-of-tables-1.toml", isDirectory: false)
         let tomlData = try Data(contentsOf: tomlURL)

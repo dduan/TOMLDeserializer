@@ -1,0 +1,78 @@
+/// Time offset in relation to a timezone. This is designed to represent and
+/// preserve the offset portion of a timestamp formatted according to
+/// [RFC 3339][].
+///
+/// [RFC 3339]: https://tools.ietf.org/html/rfc3339
+public struct TimeOffset: Equatable, Codable {
+    /// Represents sign for the offset.
+    public enum Sign: Int, Equatable, Codable {
+        case plus
+        case minus
+    }
+
+    /// The sign.
+    public var sign: Sign
+    /// The hour potion.
+    public var hour: Int8
+    /// The minute potion.
+    public var minute: Int8
+
+    /// Creates an offset from its components. If any value doesn't make sense
+    /// for its purpose, fail the creation.
+    ///
+    /// - Parameters:
+    ///   - sign: The sign of the offset.
+    ///   - hour: The hour potion of the offset. Between 0 and 23.
+    ///   - minute: The minute potion of the offset. Between 0 and 59.
+    public init?<H, M>(sign: Sign, hour: H, minute: M)
+        where H: SignedInteger, M: SignedInteger
+    {
+        if hour.isInvalidHour || minute.isInvalidMinute {
+            return nil
+        }
+
+        self.sign = sign
+        self.hour = Int8(hour)
+        self.minute = Int8(minute)
+    }
+
+    /// The value for the offset `+00:00`
+    public static var zero: TimeOffset {
+        return TimeOffset(sign: .plus, hour: 0, minute: 0)!
+    }
+
+    /// The number of seconds contained in this offset, including the sign.
+    public var asSeconds: Int {
+        let factor: Int
+        switch self.sign {
+        case .plus:
+            factor = 1
+        case .minus:
+            factor = -1
+        }
+
+        return factor * Int(self.minute) * 60 + Int(self.hour) * 3600
+    }
+}
+
+extension TimeOffset: CustomStringConvertible {
+    /// Serialized description of `TimeOffset` in RFC 3339 format.
+    public var description: String {
+        if self.hour == 0 && self.minute == 0 {
+            return "Z"
+        }
+
+        let signString: String
+        switch self.sign {
+        case .minus:
+            signString = "-"
+        case .plus:
+            signString = "+"
+        }
+
+        let hourString = "\(self.hour > 9 ? "" : "0")\(self.hour)"
+        let minuteString = "\(self.minute > 9 ? "" : "0")\(self.minute)"
+
+        return "\(signString)\(hourString):\(minuteString)"
+    }
+}

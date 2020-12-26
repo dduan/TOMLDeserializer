@@ -15,24 +15,10 @@ Unless you have a good reason not to, [TOMLDecoder][] is probably a better choic
 
 ## Installation
 
-#### With [CocoaPods](http://cocoapods.org/)
-
-```ruby
-use_frameworks!
-
-pod "TOMLDeserializer"
-```
-
 #### With [SwiftPM](https://swift.org/package-manager)
 
 ```swift
 .package(url: "https://github.com/dduan/TOMLDeserializer", from: "0.2.5")
-```
-
-#### With [Carthage](https://github.com/Carthage/Carthage)
-
-```
-github "dduan/TOMLDeserializer"
 ```
 
 ## Types
@@ -47,10 +33,10 @@ from types defined in the TOML spec to Swift types.
 | Integer          | `Swift.Int64`           |
 | Float            | `Swift.Double`          |
 | Boolean          | `Swift.Bool`            |
-| Local Time       | `NetTime.LocalTime`     |
-| Local Date       | `NetTime.LocalDate`     |
-| Local Date-Time  | `NetTime.LocalDateTime` |
-| Offset Date-Time | `NetTime.DateTime`      |
+| Local Time       | `LocalTime`             |
+| Local Date       | `LocalDate`             |
+| Local Date-Time  | `LocalDateTime`         |
+| Offset Date-Time | `DateTime`              |
 | Array            | `Swift.[Any]`           |
 | Table            | `Swift.[String: Any]`   |
 

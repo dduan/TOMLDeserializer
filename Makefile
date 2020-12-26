@@ -2,7 +2,7 @@ build: update-linux-test-manifest
 	@swift build -c release -Xswiftc -warnings-as-errors > /dev/null
 
 test:
-	@swift test -Xswiftc -warnings-as-errors
+	@swift test -Xswiftc -warnings-as-errors --enable-test-discovery
 
 update-linux-test-manifest:
 ifeq ($(shell uname),Darwin)

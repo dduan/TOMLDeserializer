@@ -1,12 +1,24 @@
 public enum TOMLDeserializer {
     public static func tomlTable(with text: String) throws -> [String: Any] {
-        return try Parser(text: text).parse()
+        var scalars = text.unicodeScalars[...]
+        guard let result = TOMLParser.root.run(&scalars) else {
+            throw TOMLError.unknown
+        }
+
+        let table = try assembleTable(from: result, referenceInput: text)
+
+        if !scalars.isEmpty {
+            throw TOMLError.deserialization(details: [
+                DeserializationError.general(.init(text, scalars.startIndex, "Invalid TOML"))
+            ])
+        }
+
+        return table
     }
 
     public static func tomlTable<Bytes>(with bytes: Bytes) throws -> [String: Any]
         where Bytes: Collection, Bytes.Element == UInt8
     {
-        let text = String(cString: Array(bytes) + [0])
-        return try Parser(text: text).parse()
+        try tomlTable(with: String(decoding: bytes, as: UTF8.self))
     }
 }

@@ -9,16 +9,11 @@ let package = Package(
             name: "TOMLDeserializer",
             targets: ["TOMLDeserializer"])
     ],
-    dependencies: [
-        .package(url: "https://github.com/dduan/NetTime", from: "0.2.3")
-    ],
     targets: [
-        .target(
-            name: "TOMLDeserializer",
-            dependencies: ["NetTime"]),
+        .target(name: "TOMLDeserializer"),
         .testTarget(
             name: "TOMLDeserializerTests",
-            dependencies: ["TOMLDeserializer", "NetTime"],
+            dependencies: ["TOMLDeserializer"],
             exclude: [
                 "Tests/DrStringTests/invalid_fixtures",
                 "Tests/DrStringTests/valid_fixtures",
