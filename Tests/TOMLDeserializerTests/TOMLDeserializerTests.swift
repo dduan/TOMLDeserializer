@@ -6,7 +6,34 @@ final class TOMLDeserializerTests: XCTestCase {
     private var directory: String {
         return "/" + #file.split(separator: "/").dropLast().joined(separator: "/")
     }
+    func formatDateComponent(_ dc: DateComponents) -> String {
+        func pad(_ i: Int) -> String {
+            i < 10 ? "0\(i)" : "\(i)"
+        }
+        var datePart = ""
+        if dc.year != nil {
+            datePart = "\(dc.year!)-\(pad(dc.month!))-\(pad(dc.day!))"
+        }
 
+        var timePart = ""
+        if dc.hour != nil {
+            timePart = "\(pad(dc.hour!)):\(pad(dc.minute!)):\(pad(dc.second!))"
+        }
+
+        if dc.nanosecond != nil {
+            timePart += ".\(String(Double(dc.nanosecond!) / 1_000_000_000).dropFirst(2))"
+        }
+
+        switch (datePart.isEmpty, timePart.isEmpty) {
+        case (false, false):
+            return "\(datePart)T\(timePart)"
+        case (true, false):
+            return timePart
+        default:
+            return datePart
+        }
+    }
+    private let dateFormatter = ISO8601DateFormatter()
     private func doctor(_ table: [String: Any]) -> [String: Any] {
         func stringify(_ value: Any) -> Any {
             if let table = value as? [String: Any] {
@@ -15,6 +42,14 @@ final class TOMLDeserializerTests: XCTestCase {
 
             if let array = value as? [Any] {
                 return array.reduce(into: [Any]()) { $0.append(stringify($1)) }
+            }
+
+            if let date = value as? Date {
+                return dateFormatter.string(from: date)
+            }
+
+            if let components = value as? DateComponents {
+                return formatDateComponent(components)
             }
 
             return "\(value)"
@@ -49,7 +84,11 @@ final class TOMLDeserializerTests: XCTestCase {
 
             return true
         } else if let a = a as? String, let b = b as? String {
-            return a == b
+            if a != b {
+                print("\(a) != \(b)")
+                return false
+            }
+            return true
         } else {
             return false
         }
