@@ -186,25 +186,6 @@ struct Map<P, NewOutput>: Parser where P: Parser {
     }
 }
 
-struct FlatMap<P1, P2>: Parser
-    where P1: Parser, P2: Parser, P1.Input == P2.Input
-{
-    let p: P1
-    let transform: (P1.Output) -> P2
-
-    func run(_ input: inout P1.Input) -> P2.Output? {
-        let original = input
-        let output = p.run(&input)
-        let newParser = output.map(transform)
-        guard let newOutput = newParser?.run(&input) else {
-            input = original
-            return nil
-        }
-        return newOutput
-    }
-}
-
-
 struct Zip<P1, P2>: Parser
     where P1: Parser, P2: Parser, P1.Input == P2.Input
 {
@@ -365,10 +346,6 @@ extension Parser {
         Map(p: self, transform: transform)
     }
 
-    func flatMap<P: Parser>(_ transform: @escaping (Output) -> P) -> FlatMap<Self, P> {
-        FlatMap(p: self, transform: transform)
-    }
-
     func skip<P>(_ p: P) -> AnyParser<Input, Output> where P: Parser, P.Input == Input {
         Zip(p1: self, p2: p)
             .map { x, _ in x }
@@ -446,15 +423,6 @@ struct FixedPrefix: Parser {
 
         input.removeFirst(s.count)
         return s
-    }
-}
-
-struct PredicatePrefix<C>: Parser where C: Collection, C.Element: Equatable {
-    let predicate: (C.Element) -> Bool
-    func run(_ input: inout C.SubSequence) -> C.SubSequence? {
-        let output = input.prefix(while: predicate)
-        input.removeFirst(output.count)
-        return output
     }
 }
 
@@ -587,15 +555,6 @@ extension Parser where Output == ([Text.Element], [Text.Element]), Input == Text
 extension Parser where Output == (Text.Element, [Text.Element]), Input == Text {
     func flatten() -> FlattenOneAndMany<Self> {
         FlattenOneAndMany(self)
-    }
-}
-
-struct ArrayPrelude: Parser {
-    func run(_ input: inout Text) -> TOMLValue? {
-        TOMLParser.whitespaceCommentNewLine
-            .replace(TOMLParser.value)
-            .skip(TOMLParser.whitespaceCommentNewLine)
-            .run(&input)
     }
 }
 
@@ -841,12 +800,6 @@ enum TOMLParser {
     static let literalStringFull =
         literalStringFullText
             .map { TOMLValue.string(String($0)) }
-    static let literalStringWithoutOpening =
-        literalChar
-            .zeroOrMore()
-            .skip(apostrophe)
-            .traced()
-            .map { TOMLValue.error($0.index, .literalStringMissingOpening) }
     static let literalStringWithoutClosing =
         apostrophe
             .replace(literalChar.zeroOrMore())
@@ -976,19 +929,12 @@ enum TOMLParser {
                     .map { $0.flatMap { $0 }}
             )
             .map { $0 + Array($1) }
-    static let multilineBasicStringFull =
+    static let multilineBasicString =
         multilineBasicDelim
             .take(newlineSeq.zeroOrOne())
             .replace(multilineBasicBody)
             .tail(multilineBasicDelim)
             .map { TOMLValue.string(String($0.0)) }
-    static let multilineBasicStringWithoutClosing =
-        multilineBasicDelim
-            .take(newlineSeq.zeroOrOne())
-            .replace(multilineBasicBody)
-            .traced()
-            .map { TOMLValue.error($0.index, .multilineBasicStringMissingClosing) }
-    static let multilineBasicString = multilineBasicStringFull
 
     static let basicStringFullText =
         ("\"" as FixedChar)
@@ -1001,12 +947,6 @@ enum TOMLParser {
     static let basicStringFull =
         basicStringFullText
             .map { TOMLValue.string(String($0)) }
-    static let basicStringWithoutOpening =
-        basicChar
-            .zeroOrMore()
-            .tail(("\"" as FixedChar))
-            .traced()
-            .map { TOMLValue.error($0.index, .basicStringMissingOpening) }
     static let basicStringWithoutClosing =
         ("\"" as FixedChar)
             .replace(

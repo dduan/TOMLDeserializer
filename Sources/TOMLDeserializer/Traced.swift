@@ -8,9 +8,3 @@ extension Traced: Equatable where Value: Equatable, Index: Equatable {
         lhs.index == rhs.index && lhs.value == lhs.value
     }
 }
-
-extension Traced {
-    func map<NewValue>(_ transform: @escaping (Value) -> NewValue) -> Traced<NewValue, Index> {
-        .init(value: transform(value), index: index)
-    }
-}
