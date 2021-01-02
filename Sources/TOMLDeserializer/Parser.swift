@@ -1247,9 +1247,10 @@ enum TOMLParser {
             .traced()
             .map { TopLevel.error($0.index, .missingValue) }
     static let keyValue =
-        OneOf2(
+        OneOf3(
             keyValueFull,
-            keyValueMissingKey
+            keyValueMissingKey,
+            keyValueMissingValue
         )
 
     static let standardTableOpening = ("[" as FixedChar).skip(whitespace)
@@ -1355,6 +1356,21 @@ enum TOMLError: Error {
     case deserialization(details: [Error])
 }
 
+extension TOMLError: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .unknown:
+            return "Unknown error"
+        case .deserialization(details: let details):
+            let output = ["Deserialization failure:"]
+            return details
+                .reduce(into: output) { $0.append(String(describing: $1)) }
+                .joined(separator: "\n    * ")
+                + "\n"
+        }
+    }
+}
+
 enum DeserializationError: Error {
     case structural(Description)
     case value(Description)
@@ -1365,6 +1381,27 @@ enum DeserializationError: Error {
         let line: Int
         let column: Int
         let text: String
+    }
+}
+
+extension DeserializationError.Description: CustomStringConvertible {
+    var description: String {
+        "|\(line), \(column)| \(text)"
+    }
+}
+
+extension DeserializationError: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .structural(let error):
+            return "Structure \(error)"
+        case .value(let error):
+            return "Value \(error)"
+        case .conflictingValue(let error):
+            return "Conflict \(error)"
+        case .general(let error):
+            return "\(error)"
+        }
     }
 }
 
@@ -1391,41 +1428,6 @@ extension DeserializationError.Description {
         (line, column) = Self.locate(index: index, reference: reference)
         self.text = text
     }
-}
-
-func declareTable(
-    table: [String: Any],
-    reference: String,
-    keys: Array<Traced<String, Text.Index>>.SubSequence,
-    context: [String]
-) throws -> [String: Any] {
-    assert(!keys.isEmpty)
-    let key = keys.first!
-    var mutable = table
-
-    switch (keys.count, table[key.value]) {
-    case (1, nil):
-        mutable[key.value] = [:]
-    case (_, nil):
-        mutable[key.value] = try declareTable(table: [:], reference: reference, keys: keys.dropFirst(), context: context + [key.value])
-    case (1, _ as [String: Any]):
-        return table
-    case (_, let existing as [[String: Any]]):
-        var mutableArray = existing
-        mutableArray[mutableArray.count - 1] = try declareTable(table: mutableArray[mutableArray.count - 1], reference: reference, keys: keys.dropFirst(), context: context + [key.value])
-        mutable[key.value] = mutableArray
-    case (_, let .some(existing)):
-        throw DeserializationError.conflictingValue(
-            .init(
-                reference,
-                key.index,
-                "Conflicting value at \(context.joined(separator: ".")).\(key.value). Existing value is \(existing)"
-            )
-        )
-    }
-
-    return mutable
-
 }
 
 func insert(
@@ -1490,11 +1492,12 @@ func insert(
         )
         mutable[key.value] = mutableArray
     case (_, let .some(existing)):
+        let path = context.isEmpty ? "\(key.value)" : "\(context.joined(separator: ".")).\(key.value)"
         throw DeserializationError.conflictingValue(
             .init(
                 reference,
                 key.index,
-                "Conflicting value at \(context.joined(separator: ".")).\(key.value). Existing value is \(existing)"
+                "Conflicting value at [\(path)] Existing value is \(existing)"
             )
         )
     }
