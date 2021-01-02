@@ -24,7 +24,7 @@ Unless you have a good reason not to, [TOMLDecoder][] is probably a better choic
 ## Types
 
 In addition to Swift types from the standard library, date and time are
-represeted with types from the [NetTime][] library. The following is a mapping
+represeted with types from `Foundation`. The following is a mapping
 from types defined in the TOML spec to Swift types.
 
 | TOML             | Swift                   |
@@ -33,14 +33,12 @@ from types defined in the TOML spec to Swift types.
 | Integer          | `Swift.Int64`           |
 | Float            | `Swift.Double`          |
 | Boolean          | `Swift.Bool`            |
-| Local Time       | `LocalTime`             |
-| Local Date       | `LocalDate`             |
-| Local Date-Time  | `LocalDateTime`         |
-| Offset Date-Time | `DateTime`              |
+| Local Time       | `DateComponents`        |
+| Local Date       | `DateComponents`        |
+| Local Date-Time  | `DateComponents`        |
+| Offset Date-Time | `Date`                  |
 | Array            | `Swift.[Any]`           |
 | Table            | `Swift.[String: Any]`   |
-
-[NetTime]: https://github.com/dduan/NetTime
 
 ## License
 
