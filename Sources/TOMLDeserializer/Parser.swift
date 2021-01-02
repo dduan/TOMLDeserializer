@@ -1,3 +1,7 @@
+import struct Foundation.DateComponents
+import struct Foundation.Date
+import struct Foundation.TimeZone
+
 typealias Text = String.UnicodeScalarView.SubSequence
 
 struct KeyValuePair: Equatable {
@@ -43,10 +47,8 @@ indirect enum TOMLValue: Equatable {
     case boolean(Bool)
     case array([TOMLValue])
     case inlineTable([KeyValuePair])
-    case offsetDateTime(DateTime)
-    case localDateTime(LocalDateTime)
-    case localDate(LocalDate)
-    case localTime(LocalTime)
+    case date(Date)
+    case dateComponents(DateComponents)
     case float(Double)
     case integer(Int)
     case error(Text.Index, Reason)
@@ -1049,17 +1051,17 @@ enum TOMLParser {
         .take(timeHour)
         .skip(":" as FixedChar)
         .take(timeMinute)
-        .map { i -> TimeOffset? in
+        .map { i -> TimeZone? in
             let (signText, hourText, minText) = (i.0.0, i.0.1, i.1)
-            let sign: TimeOffset.Sign = signText.value == 0x2B ? .plus : .minus
+            let sign: Int = signText.value == 0x2B ? 1 : -1
             let hour = Int(String(hourText))!
             let min = Int(String(minText))!
-            return TimeOffset(sign: sign, hour: hour, minute: min)
+            return TimeZone(secondsFromGMT: sign * (hour * 3600 + min * 60))
         }
     static let timeOffset =
         OneOf2(
             PredicateChar { $0.value == 0x5A || $0.value == 0x7A }
-                .map { _ in Optional.some(TimeOffset.zero) },
+                .map { _ in Optional.some(TimeZone(secondsFromGMT: 0)!) },
             timeNumOffset
         )
         .traced()
@@ -1076,9 +1078,9 @@ enum TOMLParser {
                 let hour = Int(String(hourText))!
                 let minute = Int(String(minuteText))!
                 let second = Int(String(secondText))!
-                let fracs = secFrac.map { Int8($0.value - 0x30) }
-                if let time = LocalTime(hour: hour, minute: minute, second: second, secondFraction: fracs) {
-                    return .localTime(time)
+                let fracs = secFrac.map { Int($0.value - 0x30) }
+                if let time = DateComponents(validatingHour: hour, minute: minute, second: second, secondFraction: fracs) {
+                    return .dateComponents(time)
                 } else {
                     return .error(i.index, .invalidTime)
                 }
@@ -1095,8 +1097,8 @@ enum TOMLParser {
                 let year = Int(String(yearText))!
                 let month = Int(String(monthText))!
                 let day = Int(String(dayText))!
-                if let date = LocalDate(year: year, month: month, day: day) {
-                    return .localDate(date)
+                if let date = DateComponents(validatingYear: year, month: month, day: day) {
+                    return .dateComponents(date)
                 } else {
                     return .error(i.index, .invalidDate)
                 }
@@ -1107,8 +1109,8 @@ enum TOMLParser {
             .take(localTime)
             .map { date, time -> TOMLValue in
                 switch (date, time) {
-                case (.localDate(let date), .localTime(let time)):
-                    return .localDateTime(LocalDateTime(date: date, time: time))
+                case (.dateComponents(let date), .dateComponents(let time)):
+                    return .dateComponents(DateComponents(date: date, time: time))
                 case (.error, _):
                     return date
                 default:
@@ -1126,13 +1128,13 @@ enum TOMLParser {
             .take(offsetLocalTime)
             .map { i -> TOMLValue in
                 let (date, (time, tracedOffset)) = i
-                guard let offset = tracedOffset.value else {
+                guard let timeZone = tracedOffset.value else {
                     return .error(tracedOffset.index, .invalidTimeOffset)
                 }
 
                 switch (date, time) {
-                case (.localDate(let date), .localTime(let time)):
-                    return .offsetDateTime(DateTime(date: date, time: time, utcOffset: offset))
+                case (.dateComponents(let date), .dateComponents(let time)):
+                    return .date(Date(date: date, time: time, timeZone: timeZone))
                 case (.error, _):
                     return date
                 default:
@@ -1513,13 +1515,9 @@ extension TOMLValue {
             return value
         case .integer(let value):
             return value
-        case .localTime(let value):
+        case .dateComponents(let value):
             return value
-        case .localDate(let value):
-            return value
-        case .localDateTime(let value):
-            return value
-        case .offsetDateTime(let value):
+        case .date(let value):
             return value
         case .array(let array):
             return try array.map { try $0.normalize(reference: reference) }

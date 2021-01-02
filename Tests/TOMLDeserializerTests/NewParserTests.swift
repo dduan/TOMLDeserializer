@@ -1,5 +1,6 @@
 @testable import TOMLDeserializer
 import XCTest
+import Foundation
 
 extension Parser where Input == String.UnicodeScalarView.SubSequence {
     func testRun(_ s: String) -> Output? {
@@ -243,7 +244,7 @@ final class NewParserTests: XCTestCase {
         let content = "05:05:05"
         XCTAssertEqual(
             TOMLParser.localTime.testRun(content),
-            .localTime(LocalTime(hour: 5, minute: 5, second: 5)!)
+            .dateComponents(DateComponents(hour: 5, minute: 5, second: 5))
         )
     }
 
@@ -259,7 +260,7 @@ final class NewParserTests: XCTestCase {
         let content = "2005-05-05"
         XCTAssertEqual(
             TOMLParser.localDate.testRun(content),
-            .localDate(LocalDate(year: 2005, month: 5, day: 5)!)
+            .dateComponents(DateComponents(year: 2005, month: 5, day: 5))
         )
     }
 
@@ -275,10 +276,10 @@ final class NewParserTests: XCTestCase {
         let content = "2005-05-05T05:05:05"
         XCTAssertEqual(
             TOMLParser.localDateTime.testRun(content),
-            .localDateTime(
-                LocalDateTime(
-                    date: LocalDate(year: 2005, month: 5, day: 5)!,
-                    time: LocalTime(hour: 5, minute: 5, second: 5)!
+            .dateComponents(
+                DateComponents(
+                    date: DateComponents(year: 2005, month: 5, day: 5),
+                    time: DateComponents(hour: 5, minute: 5, second: 5)
                 )
             )
         )
@@ -304,10 +305,10 @@ final class NewParserTests: XCTestCase {
         let content = "2005-05-05T05:05:05-08:00"
         XCTAssertEqual(
             TOMLParser.offsetDateTime.testRun(content),
-            .offsetDateTime(DateTime(
-                date: LocalDate(year: 2005, month: 5, day: 5)!,
-                time: LocalTime(hour: 5, minute: 5, second: 5)!,
-                utcOffset: TimeOffset(sign: .minus, hour: 8, minute: 0)!
+            .date(Date(
+                date: DateComponents(year: 2005, month: 5, day: 5),
+                time: DateComponents(hour: 5, minute: 5, second: 5),
+                timeZone: TimeZone(secondsFromGMT: -(8 * 3600))!
             ))
         )
     }
