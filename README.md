@@ -1,3 +1,5 @@
+*This project has been merged with [TOMLDecoder][]*, and will not receive further updates.*
+
 # TOMLDeserializer
 
 Turn TOML data into Swift objects.
